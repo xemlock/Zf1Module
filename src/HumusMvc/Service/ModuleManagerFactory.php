@@ -19,7 +19,7 @@
 namespace HumusMvc\Service;
 
 use HumusMvc\ModuleManager\Listener\LocaleListener;
-use Zend\ModuleManager\Listener\DefaultListenerAggregate;
+use HumusMvc\ModuleManager\Listener\DefaultListenerAggregate;
 use Zend\ModuleManager\Listener\ListenerOptions;
 use Zend\ModuleManager\ModuleEvent;
 use Zend\ModuleManager\ModuleManager;
