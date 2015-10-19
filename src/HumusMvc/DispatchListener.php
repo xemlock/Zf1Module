@@ -20,7 +20,6 @@ namespace HumusMvc;
 
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
-use Zend\Stdlib\ArrayUtils;
 use Zend_Controller_Response_Abstract as Response;
 
 class DispatchListener implements ListenerAggregateInterface
@@ -68,12 +67,6 @@ class DispatchListener implements ListenerAggregateInterface
         $sm = $application->getServiceManager();
         $front = $sm->get('FrontController');
         $front->returnResponse(true); // Response must be always returned
-        $default = $front->getDefaultModule();
-        if (null === $front->getControllerDirectory($default)) {
-            throw new Exception\RuntimeException(
-                'No default controller directory registered with front controller'
-            );
-        }
         $response = $front->dispatch();
         return $this->complete($response, $e);
     }
