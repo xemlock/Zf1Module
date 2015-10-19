@@ -36,6 +36,8 @@ use Zend_Controller_Response_Abstract as Response;
  * - Request
  * - Response
  * - Router
+ * - DispatchListener
+ * - SendResponseListener
  *
  * The most common workflow is:
  * <code>

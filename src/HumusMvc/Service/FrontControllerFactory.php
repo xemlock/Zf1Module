@@ -1,118 +1,175 @@
 <?php
-/*
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * This software consists of voluntary contributions made by many individuals
- * and is licensed under the MIT license.
- */
 
 namespace HumusMvc\Service;
 
-use HumusMvc\Exception;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Stdlib\ArrayUtils;
-use Zend_Controller_Action_HelperBroker as ActionHelperBroker;
-use Zend_Controller_Front as FrontController;
-use Zend_Layout as Layout;
+use Zend_Controller_Front;
+use Zend_Controller_Action_HelperBroker;
 
-/**
- * @category Humus
- * @package HumusMvc
- * @subpackage Service
- */
 class FrontControllerFactory implements FactoryInterface
 {
     /**
-     * @var array
-     */
-    protected $defaultOptions = array(
-        'controller_directory' => array(),
-        'module_controller_directory_name' => 'controllers',
-        'base_url' => null,
-        'throw_exceptions' => false,
-        'return_response' => true,
-        'default_module' => 'default',
-        'default_controller_name' => 'index',
-        'default_action' => 'index',
-        'params' => array(
-            'displayExceptions' => false,
-            'disableOutputBuffering' => true
-        ),
-        'plugins' => array()
-    );
-
-    /**
      * Create front controller service
      *
+     * As a side-effect if a Layout service is present in the Service
+     * Locator it will be retrieved.
+     *
      * @param ServiceLocatorInterface $serviceLocator
-     * @return FrontController
+     * @return Zend_Controller_Front
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $frontController = FrontController::getInstance();
+        $config = $serviceLocator->has('Config') ? $serviceLocator->get('Config') : array();
 
-        // handle injections
+        $options = isset($config['front_controller']) ? $config['front_controller'] : array();
+        $class = isset($options['class']) ? $options['class'] : 'Zend_Controller_Front';
+
+        /** @var $frontController Zend_Controller_Front */
+        $frontController = call_user_func(array($class, 'getInstance'));
+
         $frontController->setDispatcher($serviceLocator->get('Dispatcher'));
+        $frontController->setRouter($serviceLocator->get('Router'));
         $frontController->setRequest($serviceLocator->get('Request'));
         $frontController->setResponse($serviceLocator->get('Response'));
-        $frontController->setRouter($serviceLocator->get('Router'));
 
-        // get config
-        $appConfig = $serviceLocator->get('Config');
-        if (isset($appConfig['front_controller'])) {
-            $config = ArrayUtils::merge($this->defaultOptions, $appConfig['front_controller']);
-        } else {
-            $config = $this->defaultOptions;
+        // Setup front controller options
+        $this->init($frontController, $options);
+
+        // Retrieve controller paths from loaded modules and add them to dispatcher:
+        // - if a module provides getControllerDirectory() method, its return value
+        //   is used as a controller path for this module
+        // - otherwise a default controller path will be used (module/controllers)
+        $moduleManager = $serviceLocator->get('ModuleManager');
+
+        foreach ($moduleManager->getLoadedModules() as $module => $moduleObj) {
+            if (method_exists($moduleObj, 'getControllerDirectory')) {
+                $dir = $moduleObj->getControllerDirectory();
+            } else {
+                $ref = new \ReflectionClass($moduleObj);
+                $dir = dirname($ref->getFileName()) . '/' . $frontController->getModuleControllerDirectoryName();
+            }
+            $frontController->addControllerDirectory($dir, $module);
         }
 
-        // handle configuration
-        $frontController->setModuleControllerDirectoryName($config['module_controller_directory_name']);
-        $frontController->setBaseUrl($config['base_url']);
-        $frontController->setControllerDirectory($config['controller_directory']);
-        $frontController->throwExceptions($config['throw_exceptions']);
-        $frontController->returnResponse($config['return_response']);
-        $frontController->setDefaultModule($config['default_module']);
-        $frontController->setDefaultAction($config['default_action']);
-        $frontController->setDefaultControllerName($config['default_controller_name']);
-        $frontController->setParams($config['params']);
-        foreach ($config['plugins'] as $plugin) {
-            if (is_array(($plugin))) {
-                $pluginClass = $plugin['class'];
-                $stackIndex = $plugin['stack_index'];
-            } else {
-                $pluginClass = $plugin;
-                $stackIndex = null;
-            }
-            // plugins can be loaded with service locator
-            if ($serviceLocator->has($pluginClass)) {
-                $plugin = $serviceLocator->get($pluginClass);
-            } else {
-                $plugin = new $pluginClass();
-            }
-            $frontController->registerPlugin($plugin, $stackIndex);
-        }
-
-        // set action helper plugin manager
-        $actionHelperManager = $serviceLocator->get('ActionHelperManager');
-        ActionHelperBroker::setPluginLoader($actionHelperManager);
-        ActionHelperBroker::addHelper($actionHelperManager->get('viewRenderer'));
-
-        // start layout, if needed
-        if (isset($appConfig['layout'])) {
-            Layout::startMvc($appConfig['layout']);
+        // Zend_Layout requires eager initialization - otherwise a controller
+        // plugin that drives it will not be registered
+        if ($serviceLocator->has('Layout')) {
+            $serviceLocator->get('Layout');
         }
 
         return $frontController;
     }
+
+    /**
+     * Initialize Front Controller
+     *
+     * @param Zend_Controller_Front $front
+     * @param array $options
+     * @return void
+     */
+    protected function init(Zend_Controller_Front $front, array $options)
+    {
+        // Zend_Application_Resource_Frontcontroller has the following issues:
+        // - dispatcher cannot be provided as an already initialized object
+        // - dispatcher is not set before setting default module, default
+        //   controller, default action, etc.action,  which can result in
+        //   incoherent stat
+        // - request must be set before setting baseUrl to front controller,
+        //   otherwise it will be overwritten by next request
+        // The code below is copied from Zend_Application_Resource_Frontcontroller::init().
+        // The branch for setting the dispatcher was removed due to reasons
+        // listed above, and to the fact, that dispatcher is expected to be
+        // already set up.
+
+        foreach ($options as $key => $value) {
+            switch (strtolower($key)) {
+                case 'controllerdirectory':
+                    if (is_string($value)) {
+                        $front->setControllerDirectory($value);
+                    } elseif (is_array($value)) {
+                        foreach ($value as $module => $directory) {
+                            $front->addControllerDirectory($directory, $module);
+                        }
+                    }
+                    break;
+
+                case 'modulecontrollerdirectoryname':
+                    $front->setModuleControllerDirectoryName($value);
+                    break;
+
+                case 'moduledirectory':
+                    if (is_string($value)) {
+                        $front->addModuleDirectory($value);
+                    } elseif (is_array($value)) {
+                        foreach ($value as $moduleDir) {
+                            $front->addModuleDirectory($moduleDir);
+                        }
+                    }
+                    break;
+
+                case 'defaultcontrollername':
+                    $front->setDefaultControllerName($value);
+                    break;
+
+                case 'defaultaction':
+                    $front->setDefaultAction($value);
+                    break;
+
+                case 'defaultmodule':
+                    $front->setDefaultModule($value);
+                    break;
+
+                case 'baseurl':
+                    if (!empty($value)) {
+                        $front->setBaseUrl($value);
+                    }
+                    break;
+
+                case 'params':
+                    $front->setParams($value);
+                    break;
+
+                case 'plugins':
+                    foreach ((array) $value as $pluginClass) {
+                        $stackIndex = null;
+                        if (is_array($pluginClass)) {
+                            $pluginClass = array_change_key_case($pluginClass, CASE_LOWER);
+                            if (isset($pluginClass['class'])) {
+                                if (isset($pluginClass['stackindex'])) {
+                                    $stackIndex = $pluginClass['stackindex'];
+                                }
+
+                                $pluginClass = $pluginClass['class'];
+                            }
+                        }
+
+                        $plugin = new $pluginClass();
+                        $front->registerPlugin($plugin, $stackIndex);
+                    }
+                    break;
+
+                case 'returnresponse':
+                    $front->returnResponse((bool) $value);
+                    break;
+
+                case 'throwexceptions':
+                    $front->throwExceptions((bool) $value);
+                    break;
+
+                case 'actionhelperpaths':
+                    if (is_array($value)) {
+                        foreach ($value as $helperPrefix => $helperPath) {
+                            Zend_Controller_Action_HelperBroker::addPath($helperPath, $helperPrefix);
+                        }
+                    }
+                    break;
+
+                default:
+                    $front->setParam($key, $value);
+                    break;
+            }
+        }
+    }
 }
+
