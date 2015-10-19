@@ -17,8 +17,10 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "zendframework/zend-mvc": "2.*",
+        "zendframework/zend-di": "2.*",
+        "zendframework/zend-loader": "2.*",
         "zendframework/zend-modulemanager": "2.*",
+        "zendframework/zend-mvc": "2.*",
         "zendframework/zendframework1": "1.12.*"
     },
     "autoload": {
