@@ -73,14 +73,30 @@ class Dispatcher extends StandardDispatcher implements
     public function isDispatchable(Request $request)
     {
         $className = $this->getControllerClass($request);
-        if (($this->_defaultModule != $this->_curModule)
-        || $this->getParam('prefixDefaultModule'))
-        {
-            $className = $this->formatClassName($this->_curModule, $className);
+        if (!$className) {
+            return false;
         }
-        if (class_exists($className)) {
+
+        $finalClass  = $className;
+        if (($this->_defaultModule != $this->_curModule)
+            || $this->getParam('prefixDefaultModule'))
+        {
+            $finalClass = $this->formatClassName($this->_curModule, $className);
+        }
+        if (class_exists($finalClass)) {
             return true;
         }
+
+        $dispatchDir = $this->getDispatchDirectory();
+        $loadFile    = $dispatchDir . DIRECTORY_SEPARATOR . $this->classToFilename($className);
+
+        if (\Zend_Loader::isReadable($loadFile)) {
+            include_once $loadFile;
+        }
+        if (class_exists($finalClass, false)) {
+            return true;
+        }
+
         return false;
     }
 
@@ -130,7 +146,9 @@ class Dispatcher extends StandardDispatcher implements
         } else {
             // default controller without dependencies
             $controller = new $className($request, $response, $this->getParams());
-            if ($controller instanceof ServiceLocatorAwareInterface) {
+            if ($controller instanceof ServiceLocatorAwareInterface
+                || method_exists($controller, 'setServiceLocator')
+            ) {
                 $controller->setServiceLocator($sl);
             }
         }
@@ -181,5 +199,10 @@ class Dispatcher extends StandardDispatcher implements
 
         // Destroy the page controller instance and reflection objects
         $controller = null;
+    }
+
+    public function classToFilename($class)
+    {
+        return str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php';
     }
 }
