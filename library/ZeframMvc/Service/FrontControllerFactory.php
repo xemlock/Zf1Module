@@ -33,6 +33,10 @@ class FrontControllerFactory implements FactoryInterface
         $frontController->setRequest($serviceLocator->get('Request'));
         $frontController->setResponse($serviceLocator->get('Response'));
 
+        // Set 'bootstrap' param so that retrieving resources from bootstrap
+        // via front controller still works
+        $frontController->setParam('bootstrap', $serviceLocator->get('Bootstrap'));
+
         // Setup front controller options
         $this->init($frontController, $options);
 
