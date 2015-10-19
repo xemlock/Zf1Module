@@ -47,9 +47,6 @@ class ServiceListenerFactory extends ZendServiceListenerFactory
             'DependencyInjector'      => 'Zend\Mvc\Service\DiFactory',
             'FrontController'         => 'ZeframMvc\Service\FrontControllerFactory',
             'Router'                  => 'ZeframMvc\Service\RouterFactory',
-            'View'                    => 'ZeframMvc\Service\ViewFactory',
-            'ViewHelperManager'       => 'ZeframMvc\Service\ViewHelperManagerFactory',
-            'ActionHelperManager'     => 'ZeframMvc\Service\ActionHelperManagerFactory',
         ),
         'aliases' => array(
             'Configuration'                          => 'Config',
