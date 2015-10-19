@@ -16,7 +16,7 @@
  * and is licensed under the MIT license.
  */
 
-namespace HumusMvc;
+namespace ZeframMvc;
 
 use Zend_Controller_Action as ActionController;
 use Zend_Controller_Action_Interface as ActionControllerInterface;

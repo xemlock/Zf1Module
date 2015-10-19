@@ -16,10 +16,10 @@
  * and is licensed under the MIT license.
  */
 
-namespace HumusMvc\Service;
+namespace ZeframMvc\Service;
 
-use HumusMvc\Application;
-use HumusMvc\View\View as View;
+use ZeframMvc\Application;
+use ZeframMvc\View\View as View;
 use Zend\ServiceManager\Exception\InvalidArgumentException;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -46,10 +46,10 @@ class ViewFactory implements FactoryInterface
         $config = $serviceLocator->get('Config');
         $viewConfig = isset($config['view']) ? $config['view'] : array();
 
-        $className = isset($viewConfig['classname']) ? $viewConfig['classname'] : 'HumusMvc\View\View';
+        $className = isset($viewConfig['classname']) ? $viewConfig['classname'] : 'ZeframMvc\View\View';
         $view = new $className($viewConfig);
         if (!$view instanceof View) {
-            throw new InvalidArgumentException('View object must extend HumusMvc\View\View');
+            throw new InvalidArgumentException('View object must extend ZeframMvc\View\View');
         }
         $view->setHelperPluginManager($serviceLocator->get('ViewHelperManager'));
 

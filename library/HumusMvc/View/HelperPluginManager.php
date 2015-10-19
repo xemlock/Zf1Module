@@ -16,9 +16,9 @@
  * and is licensed under the MIT license.
  */
 
-namespace HumusMvc\View;
+namespace ZeframMvc\View;
 
-use HumusMvc\Exception;
+use ZeframMvc\Exception;
 use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\ConfigInterface;
 use Zend_View_Interface as ViewInterface;
@@ -32,7 +32,7 @@ use Zend_View_Helper_Interface as ViewHelperInterface;
  * helpers.
  *
  * @category   Humus
- * @package    HumusMvc
+ * @package    ZeframMvc
  * @subpackage View
  */
 class HelperPluginManager extends AbstractPluginManager
@@ -121,7 +121,7 @@ class HelperPluginManager extends AbstractPluginManager
         parent::__construct($configuration);
         $this->addInitializer(array($this, 'injectView'));
         if ($this->has('Navigation')) {
-            $this->setInvokableClass('navigation', 'HumusMvc\View\Helper\Navigation');
+            $this->setInvokableClass('navigation', 'ZeframMvc\View\Helper\Navigation');
         }
     }
 

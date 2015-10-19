@@ -1,6 +1,6 @@
 <?php
 
-namespace HumusMvc\Bootstrap;
+namespace ZeframMvc\Bootstrap;
 
 use Zend\ServiceManager\ServiceManager;
 use Zend\ServiceManager\ServiceManagerAwareInterface;

@@ -16,9 +16,9 @@
  * and is licensed under the MIT license.
  */
 
-namespace HumusMvc\Db;
+namespace ZeframMvc\Db;
 
-use HumusMvc\Exception;
+use ZeframMvc\Exception;
 use Zend_Db_Adapter_Abstract;
 
 class MultiDbManager implements MultiDbManagerInterface

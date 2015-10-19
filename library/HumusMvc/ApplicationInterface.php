@@ -16,7 +16,7 @@
  * and is licensed under the MIT license.
  */
 
-namespace HumusMvc;
+namespace ZeframMvc;
 
 use Zend\EventManager\EventsCapableInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -25,7 +25,7 @@ use Zend_Controller_Response_Abstract as Response;
 
 /**
  * @category   Humus
- * @package    HumusMvc
+ * @package    ZeframMvc
  */
 interface ApplicationInterface extends EventsCapableInterface
 {

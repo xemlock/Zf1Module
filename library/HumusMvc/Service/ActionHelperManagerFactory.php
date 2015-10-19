@@ -16,9 +16,9 @@
  * and is licensed under the MIT license.
  */
 
-namespace HumusMvc\Service;
+namespace ZeframMvc\Service;
 
-use HumusMvc\Exception;
+use ZeframMvc\Exception;
 use Zend\Mvc\Service\AbstractPluginManagerFactory;
 use Zend\ServiceManager\ConfigInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -26,12 +26,12 @@ use Zend_View_Helper_Navigation as NavigationViewHelper;
 
 /**
  * @category Humus
- * @package HumusMvc
+ * @package ZeframMvc
  * @subpackage Service
  */
 class ActionHelperManagerFactory extends AbstractPluginManagerFactory
 {
-    const PLUGIN_MANAGER_CLASS = 'HumusMvc\Controller\Action\HelperPluginManager';
+    const PLUGIN_MANAGER_CLASS = 'ZeframMvc\Controller\Action\HelperPluginManager';
 
     /**
      * Create and return the view helper manager
@@ -44,7 +44,7 @@ class ActionHelperManagerFactory extends AbstractPluginManagerFactory
         $plugins = parent::createService($serviceLocator);
 
         $plugins->setFactory('viewRenderer', function($sm) use ($serviceLocator) {
-            $renderer = new \HumusMvc\Controller\Action\Helper\ViewRenderer();
+            $renderer = new \ZeframMvc\Controller\Action\Helper\ViewRenderer();
             $renderer->setServiceLocator($serviceLocator);
             return $renderer;
         });

@@ -16,10 +16,10 @@
  * and is licensed under the MIT license.
  */
 
-namespace HumusMvc\Service;
+namespace ZeframMvc\Service;
 
-use HumusMvc\ModuleManager\Listener\LocaleListener;
-use HumusMvc\ModuleManager\Listener\DefaultListenerAggregate;
+use ZeframMvc\ModuleManager\Listener\LocaleListener;
+use ZeframMvc\ModuleManager\Listener\DefaultListenerAggregate;
 use Zend\ModuleManager\Listener\ListenerOptions;
 use Zend\ModuleManager\ModuleEvent;
 use Zend\ModuleManager\ModuleManager;
@@ -28,7 +28,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * @category   Humus
- * @package    HumusMvc
+ * @package    ZeframMvc
  * @subpackage Service
  */
 class ModuleManagerFactory implements FactoryInterface
@@ -50,10 +50,10 @@ class ModuleManagerFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         if (!$serviceLocator->has('ServiceListener')) {
-            $serviceLocator->setFactory('ServiceListener', 'HumusMvc\Service\ServiceListenerFactory');
+            $serviceLocator->setFactory('ServiceListener', 'ZeframMvc\Service\ServiceListenerFactory');
         }
         if (!$serviceLocator->has('Zf1MvcListener')) {
-            $serviceLocator->setFactory('Zf1MvcListener', 'HumusMvc\Service\Zf1MvcListenerFactory');
+            $serviceLocator->setFactory('Zf1MvcListener', 'ZeframMvc\Service\Zf1MvcListenerFactory');
         }
 
         $configuration    = $serviceLocator->get('ApplicationConfig');
@@ -76,7 +76,7 @@ class ModuleManagerFactory implements FactoryInterface
         $serviceListener->addServiceManager(
             'ActionHelperManager',
             'action_helpers',
-            'HumusMvc\ModuleManager\Feature\ActionHelperProviderInterface',
+            'ZeframMvc\ModuleManager\Feature\ActionHelperProviderInterface',
             'getActionHelperConfig'
         );
 
@@ -84,7 +84,7 @@ class ModuleManagerFactory implements FactoryInterface
         $events->attach($defaultListeners);
         $events->attach($serviceListener);
         $sharedEvents = $events->getSharedManager();
-        $sharedEvents->attach('HumusMvc\Application', 'bootstrap', new LocaleListener);
+        $sharedEvents->attach('ZeframMvc\Application', 'bootstrap', new LocaleListener);
 
         $moduleEvent = new ModuleEvent;
         $moduleEvent->setParam('ServiceManager', $serviceLocator);

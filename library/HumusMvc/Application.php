@@ -16,11 +16,11 @@
  * and is licensed under the MIT license.
  */
 
-namespace HumusMvc;
+namespace ZeframMvc;
 
 use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManagerInterface;
-use HumusMvc\Service\ServiceManagerConfig;
+use ZeframMvc\Service\ServiceManagerConfig;
 use Zend\ServiceManager\ServiceManager;
 use Zend_Controller_Request_Abstract as Request;
 use Zend_Controller_Response_Abstract as Response;
@@ -53,7 +53,7 @@ use Zend_Controller_Response_Abstract as Response;
  * can simply extend the class to override such behavior.
  *
  * @category   Humus
- * @package    HumusMvc
+ * @package    ZeframMvc
  */
 class Application implements
     ApplicationInterface,

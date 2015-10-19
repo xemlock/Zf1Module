@@ -1,6 +1,6 @@
 <?php
 
-namespace HumusMvc\ModuleManager\Listener;
+namespace ZeframMvc\ModuleManager\Listener;
 
 use Zend\ModuleManager\Listener\AbstractListener;
 use Zend\ModuleManager\ModuleEvent;

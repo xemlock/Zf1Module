@@ -16,10 +16,10 @@
  * and is licensed under the MIT license.
  */
 
-namespace HumusMvc\Db\Service;
+namespace ZeframMvc\Db\Service;
 
-use HumusMvc\Db\MultiDbManager;
-use HumusMvc\Exception;
+use ZeframMvc\Db\MultiDbManager;
+use ZeframMvc\Exception;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend_Cache_Core;

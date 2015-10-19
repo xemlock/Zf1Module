@@ -1,11 +1,11 @@
 <?php
 
-namespace HumusMvc\Bootstrap;
+namespace ZeframMvc\Bootstrap;
 
 use Zend\ServiceManager\ServiceManager;
-use HumusMvc\Bootstrap\Container;
-use HumusMvc\Exception\InvalidArgumentException;
-use HumusMvc\Exception\UnsupportedMethodCallException;
+use ZeframMvc\Bootstrap\Container;
+use ZeframMvc\Exception\InvalidArgumentException;
+use ZeframMvc\Exception\UnsupportedMethodCallException;
 
 
 /**
@@ -14,7 +14,7 @@ use HumusMvc\Exception\UnsupportedMethodCallException;
  * Bootstrap class provides ZF1 access to resources and resource container.
  * It is required by ZF1 application resources.
  *
- * @package HumusMvc\Bootstrap
+ * @package ZeframMvc\Bootstrap
  */
 class Bootstrap extends \Zend_Application_Bootstrap_BootstrapAbstract
 {
@@ -40,6 +40,6 @@ class Bootstrap extends \Zend_Application_Bootstrap_BootstrapAbstract
 
     public function run()
     {
-        throw new UnsupportedMethodCallException('Use \HumusMvc\Application::run() to run application');
+        throw new UnsupportedMethodCallException('Use \ZeframMvc\Application::run() to run application');
     }
 }

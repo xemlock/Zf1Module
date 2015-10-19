@@ -16,7 +16,7 @@
  * and is licensed under the MIT license.
  */
 
-namespace HumusMvc\Controller;
+namespace ZeframMvc\Controller;
 
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
@@ -24,7 +24,7 @@ use Zend_Controller_Action;
 
 /**
  * @category Humus
- * @package HumusMvc
+ * @package ZeframMvc
  * @subpackage Controller
  */
 abstract class AbstractActionController extends Zend_Controller_Action implements ServiceLocatorAwareInterface

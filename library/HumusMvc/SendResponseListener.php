@@ -16,7 +16,7 @@
  * and is licensed under the MIT license.
  */
 
-namespace HumusMvc;
+namespace ZeframMvc;
 
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;

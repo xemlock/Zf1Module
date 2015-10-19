@@ -1,6 +1,6 @@
 <?php
 
-namespace HumusMvc\Loader;
+namespace ZeframMvc\Loader;
 
 use Zend\Loader\ModuleAutoloader as Zf2ModuleAutoloader;
 

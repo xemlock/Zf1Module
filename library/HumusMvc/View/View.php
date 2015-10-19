@@ -16,15 +16,15 @@
  * and is licensed under the MIT license.
  */
 
-namespace HumusMvc\View;
+namespace ZeframMvc\View;
 
-use HumusMvc\Exception;
-use HumusMvc\View\HelperPluginManager;
+use ZeframMvc\Exception;
+use ZeframMvc\View\HelperPluginManager;
 use Zend_View;
 
 /**
  * @category   Humus
- * @package    HumusMvc
+ * @package    ZeframMvc
  */
 class View extends Zend_View
 {
@@ -66,7 +66,7 @@ class View extends Zend_View
         }
         if (!$helpers instanceof HelperPluginManager) {
             throw new Exception\InvalidArgumentException(sprintf(
-                'Helper helpers must extend HumusMvc\View\HelperPluginManager; got type "%s" instead',
+                'Helper helpers must extend ZeframMvc\View\HelperPluginManager; got type "%s" instead',
                 (is_object($helpers) ? get_class($helpers) : gettype($helpers))
             ));
         }

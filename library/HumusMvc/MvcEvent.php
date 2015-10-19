@@ -16,7 +16,7 @@
  * and is licensed under the MIT license.
  */
 
-namespace HumusMvc;
+namespace ZeframMvc;
 
 use Zend\Mvc\MvcEvent as Zf2MvcEvent;
 use Zend\EventManager\Event;
@@ -26,7 +26,7 @@ use Zend_Controller_Response_Abstract as Response;
 
 /**
  * @category   Humus
- * @package    HumusMvc
+ * @package    ZeframMvc
  */
 class MvcEvent extends Zf2MvcEvent
 {

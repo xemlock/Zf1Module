@@ -1,6 +1,6 @@
 <?php
 
-namespace HumusMvc\Service;
+namespace ZeframMvc\Service;
 
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;

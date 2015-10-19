@@ -16,7 +16,7 @@
  * and is licensed under the MIT license.
  */
 
-namespace HumusMvc\Service;
+namespace ZeframMvc\Service;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -24,7 +24,7 @@ use Zend_Navigation as Navigation;
 
 /**
  * @category Humus
- * @package HumusMvc
+ * @package ZeframMvc
  * @subpackage Service
  */
 class NavigationFactory implements FactoryInterface

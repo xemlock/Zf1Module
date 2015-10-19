@@ -1,6 +1,6 @@
 <?php
 
-namespace HumusMvc\ModuleManager\Listener;
+namespace ZeframMvc\ModuleManager\Listener;
 
 use Zend\EventManager\EventManagerInterface;
 use Zend\ModuleManager\Listener\DefaultListenerAggregate as Zf2DefaultListenerAggregate;

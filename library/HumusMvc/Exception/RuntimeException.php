@@ -16,11 +16,11 @@
  * and is licensed under the MIT license.
  */
 
-namespace HumusMvc\Exception;
+namespace ZeframMvc\Exception;
 
 /**
  * @category Humus
- * @package HumusMvc
+ * @package ZeframMvc
  * @subpackage Exception
  */
 class RuntimeException extends \RuntimeException implements ExceptionInterface

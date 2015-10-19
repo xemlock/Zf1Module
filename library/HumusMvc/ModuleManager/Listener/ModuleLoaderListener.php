@@ -1,8 +1,8 @@
 <?php
 
-namespace HumusMvc\ModuleManager\Listener;
+namespace ZeframMvc\ModuleManager\Listener;
 
-use HumusMvc\Loader\ModuleAutoloader;
+use ZeframMvc\Loader\ModuleAutoloader;
 use Zend\ModuleManager\Listener\ModuleLoaderListener as Zf2ModuleLoaderListener;
 use Zend\ModuleManager\Listener\AbstractListener;
 use Zend\ModuleManager\Listener\ListenerOptions;

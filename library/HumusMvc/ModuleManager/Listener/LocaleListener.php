@@ -16,9 +16,9 @@
  * and is licensed under the MIT license.
  */
 
-namespace HumusMvc\ModuleManager\Listener;
+namespace ZeframMvc\ModuleManager\Listener;
 
-use HumusMvc\MvcEvent;
+use ZeframMvc\MvcEvent;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
 use Zend_Locale as Locale;
@@ -29,7 +29,7 @@ class LocaleListener
     const DEFAULT_REGISTRY_KEY = 'Zend_Locale';
 
     /**
-     * @param \HumusMvc\MvcEvent $e
+     * @param \ZeframMvc\MvcEvent $e
      * @return void
      */
     public function __invoke(MvcEvent $e)

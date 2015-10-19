@@ -16,15 +16,15 @@
  * and is licensed under the MIT license.
  */
 
-namespace HumusMvc\View\Helper\Navigation;
+namespace ZeframMvc\View\Helper\Navigation;
 
-use HumusMvc\Exception;
-use HumusMvc\View\HelperPluginManager;
+use ZeframMvc\Exception;
+use ZeframMvc\View\HelperPluginManager;
 use Zend_View_Helper_Navigation_HelperAbstract as AbstractHelper;
 
 /**
  * @category Humus
- * @package HumusMvc
+ * @package ZeframMvc
  * @subpackage View
  */
 class PluginManager extends HelperPluginManager

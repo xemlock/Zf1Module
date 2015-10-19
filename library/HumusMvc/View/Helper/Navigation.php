@@ -16,7 +16,7 @@
  * and is licensed under the MIT license.
  */
 
-namespace HumusMvc\View\Helper;
+namespace ZeframMvc\View\Helper;
 
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend_Navigation as ZendNavigation;
@@ -26,7 +26,7 @@ use Zend_View_Helper_Navigation_Helper as NavigationViewHelperHelper;
 
 /**
  * @category Humus
- * @package HumusMvc
+ * @package ZeframMvc
  * @subpacke View
  */
 class Navigation extends NavigationViewHelper

@@ -16,7 +16,7 @@
  * and is licensed under the MIT license.
  */
 
-namespace HumusMvc\Controller\Action\Helper;
+namespace ZeframMvc\Controller\Action\Helper;
 
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend_Controller_Action_Exception;

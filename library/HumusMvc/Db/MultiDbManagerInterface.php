@@ -16,7 +16,7 @@
  * and is licensed under the MIT license.
  */
 
-namespace HumusMvc\Db;
+namespace ZeframMvc\Db;
 
 interface MultiDbManagerInterface
 {
@@ -36,7 +36,7 @@ interface MultiDbManagerInterface
      * @param  null|string|\Zend_Db_Adapter_Abstract $db The adapter to retrieve.
      *                                               Null to retrieve the default connection
      * @return \Zend_Db_Adapter_Abstract
-     * @throws \HumusMvc\Exception\InvalidArgumentException if the given parameter could not be found
+     * @throws \ZeframMvc\Exception\InvalidArgumentException if the given parameter could not be found
      */
     public function getDb($db = null);
 

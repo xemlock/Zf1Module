@@ -16,9 +16,9 @@
  * and is licensed under the MIT license.
  */
 
-namespace HumusMvc\Controller\Action;
+namespace ZeframMvc\Controller\Action;
 
-use HumusMvc\Exception;
+use ZeframMvc\Exception;
 use Zend\ServiceManager\AbstractPluginManager;
 use Zend_Controller_Action_Helper_Abstract as AbstractActionHelper;
 use Zend_Loader_PluginLoader_Interface as PluginLoaderInterface;

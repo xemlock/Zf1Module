@@ -16,13 +16,13 @@
  * and is licensed under the MIT license.
  */
 
-namespace HumusMvc\Service;
+namespace ZeframMvc\Service;
 
 use Zend\Mvc\Service\ServiceManagerConfig as ZendServiceManagerConfig;
 
 /**
  * @category   Humus
- * @package    HumusMvc
+ * @package    ZeframMvc
  * @subpackage Service
  */
 class ServiceManagerConfig extends ZendServiceManagerConfig
@@ -34,6 +34,6 @@ class ServiceManagerConfig extends ZendServiceManagerConfig
      */
     protected $factories = array(
         'EventManager'  => 'Zend\Mvc\Service\EventManagerFactory',
-        'ModuleManager' => 'HumusMvc\Service\ModuleManagerFactory',
+        'ModuleManager' => 'ZeframMvc\Service\ModuleManagerFactory',
     );
 }

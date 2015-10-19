@@ -16,9 +16,9 @@
  * and is licensed under the MIT license.
  */
 
-namespace HumusMvc\Cache\Service;
+namespace ZeframMvc\Cache\Service;
 
-use HumusMvc\Exception;
+use ZeframMvc\Exception;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend_Cache_Manager as CacheManager;

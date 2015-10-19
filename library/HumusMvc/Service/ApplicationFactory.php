@@ -16,15 +16,15 @@
  * and is licensed under the MIT license.
  */
 
-namespace HumusMvc\Service;
+namespace ZeframMvc\Service;
 
-use HumusMvc\Application;
+use ZeframMvc\Application;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * @category   Humus
- * @package    HumusMvc
+ * @package    ZeframMvc
  * @subpackage Service
  */
 class ApplicationFactory implements FactoryInterface
@@ -32,7 +32,7 @@ class ApplicationFactory implements FactoryInterface
     /**
      * Create the Application service
      *
-     * Creates a HumusMvc\Application service, passing it the configuration
+     * Creates a ZeframMvc\Application service, passing it the configuration
      * service and the service manager instance.
      *
      * @param  ServiceLocatorInterface $serviceLocator
