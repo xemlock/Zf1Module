@@ -15,20 +15,39 @@ class ModuleResolverListener extends AbstractListener
     public function __invoke(ModuleEvent $e)
     {
         $moduleName = $e->getModuleName();
-        $class      = $moduleName . '\Module';
 
-        // autoloading will not be triggered for invalid namespaces (PHP 5.6)
-        // we need to call autoload explicitly
+        // If top-level namespace is in spinal-case, convert it to CamelCase.
+        // This probably is a module following ZF1 module naming convention.
+        if (preg_match('/^[a-z][-.a-z]+/', $moduleName)) {
+            $moduleNameParts = explode('\\', $moduleName, 2);
+            $moduleNameParts[0] = $this->formatModuleName($moduleNameParts[0]);
+            $moduleName = implode('\\', $moduleNameParts);
+        }
+
+        $class = $moduleName . '\Module';
+
         if (!class_exists($class)) {
-            $moduleAutoloader = ModuleAutoloader::getInstance();
-            if ($moduleAutoloader && ($loadedClass = $moduleAutoloader->autoload($class))) {
-                $class = $loadedClass;
-            } else {
-                return false;
-            }
+            return false;
         }
 
         $module = new $class;
         return $module;
+    }
+
+    /**
+     * Format a module name
+     *
+     * @param  string $name
+     * @return string
+     */
+    public function formatModuleName($name)
+    {
+        // This code is taken from Zend_Application_Resource_Modules,
+        // it transforms module directory name to module class prefix
+        $name = strtolower($name);
+        $name = str_replace(array('-', '.'), ' ', $name);
+        $name = ucwords($name);
+        $name = str_replace(' ', '', $name);
+        return $name;
     }
 }
