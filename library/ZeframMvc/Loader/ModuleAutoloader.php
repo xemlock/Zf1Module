@@ -23,10 +23,21 @@ class ModuleAutoloader extends Zf2ModuleAutoloader
     /**
      * {@inheritDoc}
      */
-    public function __construct($options = null)
+    public function register()
     {
-        parent::__construct($options);
+        parent::register();
         self::$_instance = $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function unregister()
+    {
+        parent::unregister();
+        if (self::$_instance === $this) {
+            self::$_instance = null;
+        }
     }
 
     /**
@@ -46,7 +57,6 @@ class ModuleAutoloader extends Zf2ModuleAutoloader
         return parent::loadModuleFromDir($dirPath, $class);
     }
 
-
     /**
      * Format a module name
      *
@@ -63,9 +73,9 @@ class ModuleAutoloader extends Zf2ModuleAutoloader
     }
 
     /**
-     * Get existing instance of module autoloader
+     * Get currently registered instance of module autoloader
      *
-     * @return ModuleAutoloader|null
+     * @return \ZeframMvc\Loader\ModuleAutoloader|null
      */
     public static function getInstance()
     {
