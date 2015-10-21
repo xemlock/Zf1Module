@@ -16,6 +16,9 @@ class BootstrapFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new Bootstrap($serviceLocator, $serviceLocator->get('ApplicationConfig'));
+        $config = $serviceLocator->has('Config') ? $serviceLocator->get('Config') : array();
+        $options = isset($config['bootstrap']) ? $config['bootstrap'] : array();
+
+        return new Bootstrap($serviceLocator, $options);
     }
 }

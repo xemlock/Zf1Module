@@ -41,8 +41,11 @@ class ResourceFactory implements AbstractFactoryInterface
 
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
+        // normalize service name by transforming it to snake_case
+        $normalizedName = strtolower(preg_replace('/([^A-Z])([A-Z])/', '$1_$2', $requestedName));
+
         $config = $serviceLocator->has('Config') ? $serviceLocator->get('Config') : array();
-        $options = isset($config[$requestedName]) ? $config[$requestedName] : array();
+        $options = isset($config[$normalizedName]) ? $config[$normalizedName] : array();
 
         /** @var $bootstrap \Zend_Application_Bootstrap_ResourceBootstrapper */
         $bootstrap = $serviceLocator->get('Bootstrap');

@@ -20,16 +20,16 @@ class Bootstrap extends \Zend_Application_Bootstrap_BootstrapAbstract
 {
     /**
      * @param ServiceManager $serviceLocator
-     * @param array $config Application config
+     * @param array $options Application config
      * @throws InvalidArgumentException
      */
-    public function __construct($serviceManager, array $config = array())
+    public function __construct($serviceManager, array $options = array())
     {
         if (!$serviceManager instanceof ServiceManager) {
             throw new InvalidArgumentException('Service locator passed to bootstrap must be an instance of \Zend\ServiceManager\ServiceManager');
         }
         $this->setContainer(new Container($serviceManager));
-        $this->setOptions($config);
+        $this->setOptions($options);
     }
 
     protected function _bootstrap($resource = null)
