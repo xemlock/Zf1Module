@@ -11,12 +11,32 @@ class ResourceFactory implements AbstractFactoryInterface
     {
         /** @var $bootstrap \Zend_Application_Bootstrap_ResourceBootstrapper */
         $bootstrap = $serviceLocator->get('Bootstrap');
-        try {
-            $pluginClass = $bootstrap->getPluginLoader()->load(strtolower($requestedName));
-        } catch (\Zend_Loader_Exception $e) {
-            $pluginClass = null;
+
+        // If a plugin resource is already registered in bootstrap assume
+        // it can be (or has already been) instantiated.
+        if ($bootstrap->hasPluginResource($requestedName)) {
+            return true;
         }
-        return (bool) $pluginClass;
+
+        // Try to register plugin resource of requested name
+        try {
+            $bootstrap->registerPluginResource($requestedName);
+        } catch (\Exception $e) {
+            // Unable to register plugin resource, fall
+            return false;
+        }
+
+        // If plugin resource regustration succeeds, try to instantiate
+        // the plugin resource
+        try {
+            $pluginResourceLoaded = (bool) $bootstrap->getPluginResource($requestedName);
+        } catch (\Exception $e) {
+            $pluginResourceLoaded = false;
+        }
+
+        $bootstrap->unregisterPluginResource($requestedName);
+
+        return $pluginResourceLoaded;
     }
 
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
@@ -30,6 +50,9 @@ class ResourceFactory implements AbstractFactoryInterface
             $bootstrap->registerPluginResource($requestedName);
         }
 
-        return $bootstrap->getPluginResource($requestedName)->setOptions($options)->init();
+        /** @var $pluginResource \Zend_Application_Resource_ResourceAbstract */
+        $pluginResource = $bootstrap->getPluginResource($requestedName);
+
+        return $pluginResource->setOptions($options)->init();
     }
 }
