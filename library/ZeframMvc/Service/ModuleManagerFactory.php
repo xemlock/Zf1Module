@@ -27,7 +27,6 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * @category   Humus
  * @package    ZeframMvc
  * @subpackage Service
  */
@@ -52,9 +51,6 @@ class ModuleManagerFactory implements FactoryInterface
         if (!$serviceLocator->has('ServiceListener')) {
             $serviceLocator->setFactory('ServiceListener', 'ZeframMvc\Service\ServiceListenerFactory');
         }
-        if (!$serviceLocator->has('Zf1MvcListener')) {
-            $serviceLocator->setFactory('Zf1MvcListener', 'ZeframMvc\Service\Zf1MvcListenerFactory');
-        }
 
         $configuration    = $serviceLocator->get('ApplicationConfig');
         $listenerOptions  = new ListenerOptions($configuration['module_listener_options']);
@@ -67,6 +63,12 @@ class ModuleManagerFactory implements FactoryInterface
             'Zend\ModuleManager\Feature\ServiceProviderInterface',
             'getServiceConfig'
         );
+        /*$serviceListener->addServiceManager(
+            'RoutePluginManager',
+            'route_manager',
+            'Zend\ModuleManager\Feature\RouteProviderInterface',
+            'getRouteConfig'
+        );*/
 
         $events = $serviceLocator->get('EventManager');
         $events->attach($defaultListeners);
