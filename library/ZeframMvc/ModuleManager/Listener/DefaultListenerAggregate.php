@@ -5,6 +5,7 @@ namespace ZeframMvc\ModuleManager\Listener;
 use Zend\EventManager\EventManagerInterface;
 use Zend\ModuleManager\Listener\DefaultListenerAggregate as Zf2DefaultListenerAggregate;
 use Zend\ModuleManager\Listener\LocatorRegistrationListener;
+use Zend\ModuleManager\Listener\ModuleResolverListener;
 use Zend\ModuleManager\Listener\AutoloaderListener;
 use Zend\ModuleManager\Listener\ModuleDependencyCheckerListener;
 use Zend\ModuleManager\Listener\InitTrigger;
@@ -14,8 +15,8 @@ use Zend\ModuleManager\ModuleEvent;
 /**
  * Default Listener Aggregate
  *
- * Attaches a customized ModuleLoaderListener and ModuleResolverListener
- * that can properly handle ZF1 module naming conventions.
+ * Attaches a customized ModuleLoaderListener that can properly handle
+ * ZF1 naming conventions of module directories.
  */
 class DefaultListenerAggregate extends Zf2DefaultListenerAggregate
 {
@@ -26,8 +27,8 @@ class DefaultListenerAggregate extends Zf2DefaultListenerAggregate
     {
         // The code below is directly copied from Zend\ModuleManager\Listener\DefaultListenerAggregate::attach()
         // - which hasn't changed since 15 Jan 2013 (zendframework/zend-modulemanager@4684ed2).
-        // Please note that ModuleLoaderListener and ModuleResolverListener classes used are not the original
-        // ones due to used use directives.
+        // Please note that ModuleLoaderListener class used is not the original
+        // one due to used 'use' directives.
 
         $options                     = $this->getOptions();
         $configListener              = $this->getConfigListener();
