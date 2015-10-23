@@ -16,12 +16,12 @@
         }
     ],
     "require": {
-        "php": ">=5.3.23",
-        "zendframework/zend-config": "~2.5",
-        "zendframework/zend-di": "~2.5",
-        "zendframework/zend-loader": "~2.5",
-        "zendframework/zend-modulemanager": "~2.5",
-        "zendframework/zend-mvc": "~2.5",
+        "php": ">=5.3.3",
+        "zendframework/zend-config": "~2.2",
+        "zendframework/zend-di": "~2.2",
+        "zendframework/zend-loader": "~2.2",
+        "zendframework/zend-modulemanager": "~2.2",
+        "zendframework/zend-mvc": "~2.2",
         "zendframework/zendframework1": "~1.12"
     },
     "autoload": {
