@@ -41,14 +41,9 @@ class ResourceFactory implements AbstractFactoryInterface
 
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        // Normalize service name by transforming it to snake_case
-        $normalizedName = strtolower(preg_replace('/([^A-Z])([A-Z])/', '$1_$2', $requestedName));
-
-        $config = $serviceLocator->has('Config') ? $serviceLocator->get('Config') : array();
-        $options = isset($config[$normalizedName]) ? $config[$normalizedName] : array();
-
         /** @var $bootstrap \Zend_Application_Bootstrap_ResourceBootstrapper */
         $bootstrap = $serviceLocator->get('Bootstrap');
+
         if (!$bootstrap->hasPluginResource($requestedName)) {
             $bootstrap->registerPluginResource($requestedName);
         }
@@ -56,17 +51,46 @@ class ResourceFactory implements AbstractFactoryInterface
         /** @var $pluginResource \Zend_Application_Resource_ResourceAbstract */
         $pluginResource = $bootstrap->getPluginResource($requestedName);
 
-        // Initialize resource
+        // Setup and initialize resource
+        $config = $serviceLocator->has('Config') ? $serviceLocator->get('Config') : array();
+
+        $configKey = $this->getConfigKey($requestedName);
+        $options = isset($config[$configKey]) ? $config[$configKey] : array();
+
         $service = $pluginResource->setOptions($options)->init();
 
         // Prevent 'The factory was called but did not return an instance'
-        // exception, because init() does not necessarily return anything,
-        // which is equivalent to returning NULL. That is exactly the case
-        // with Zend_Application_Resource_Session::init()
+        // exception, since resource's init() method may not return anything,
+        // which is equivalent to returning NULL. Such is the case with
+        // Zend_Application_Resource_Session::init().
         if ($service === null) {
             $service = true;
         }
 
         return $service;
+    }
+
+    /**
+     * Gets service config key
+     *
+     * @param string $serviceName
+     * @return string
+     */
+    public function getConfigKey($serviceName)
+    {
+        // Create service config key by transforming the name from CamelCase
+        // to snake_case, i.e. config key for 'CacheManager' is 'cache_manager',
+        // for 'MultiDb' (or 'MultiDB') is 'multi_db'
+
+        // To properly handle sequences of consecutive uppercase characters,
+        // insert underscore before each word (except the first one) starting with
+        // an uppercased letter and followed by one or more lowercased letters.
+        $configKey = preg_replace('/(?<!^)([A-Z])(?=[a-z])/', '_$1', $serviceName);
+
+        // Insert an underscore before a possible all uppercase suffix that wasn't
+        // matched in the previous step.
+        $configKey = strtolower(preg_replace('/(?<=[a-z])([A-Z])/', '_$1', $configKey));
+
+        return $configKey;
     }
 }
