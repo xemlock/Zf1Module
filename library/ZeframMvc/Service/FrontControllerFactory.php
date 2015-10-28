@@ -56,12 +56,6 @@ class FrontControllerFactory implements FactoryInterface
             $frontController->addControllerDirectory($dir, $module);
         }
 
-        // Zend_Layout requires eager initialization - otherwise a controller
-        // plugin that drives it will not be registered
-        if ($serviceLocator->has('Layout')) {
-            $serviceLocator->get('Layout');
-        }
-
         return $frontController;
     }
 
