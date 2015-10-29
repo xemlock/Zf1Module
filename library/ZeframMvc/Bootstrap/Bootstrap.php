@@ -19,6 +19,11 @@ use ZeframMvc\Exception\UnsupportedMethodCallException;
 class Bootstrap extends \Zend_Application_Bootstrap_BootstrapAbstract
 {
     /**
+     * @var \Zend\ServiceManager\ServiceManager
+     */
+    protected $_serviceManager;
+
+    /**
      * @param ServiceManager $serviceLocator
      * @param array $options Application config
      * @throws InvalidArgumentException
@@ -28,18 +33,38 @@ class Bootstrap extends \Zend_Application_Bootstrap_BootstrapAbstract
         if (!$serviceManager instanceof ServiceManager) {
             throw new InvalidArgumentException('Service locator passed to bootstrap must be an instance of \Zend\ServiceManager\ServiceManager');
         }
-        $this->setContainer(new Container($serviceManager));
+        $this->_serviceManager = $serviceManager;
         $this->setOptions($options);
+    }
+
+    public function getContainer()
+    {
+        if (null === $this->_container) {
+            $this->setContainer(new Container($this->_serviceManager));
+        }
+        return $this->_container;
+    }
+
+    public function hasResource($name)
+    {
+        // no name mangling as it is entirely done by the service manager
+        return $this->_serviceManager->has($name);
+    }
+
+    public function getResource($name)
+    {
+        // no name mangling as it is entirely done by the service manager
+        return $this->_serviceManager->get($name);
     }
 
     protected function _bootstrap($resource = null)
     {
-        // no-op due to lazy loading, objects are initialized by
-        // factories, when retrieved from container
+        // no-op due to lazy loading, objects are to be initialized by
+        // the service manager upon explicit request
     }
 
     public function run()
     {
-        throw new UnsupportedMethodCallException('Use \ZeframMvc\Application::run() to run application');
+        throw new UnsupportedMethodCallException('Use ZeframMvc\Application::run() to run application');
     }
 }
