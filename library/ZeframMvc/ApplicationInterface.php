@@ -24,7 +24,6 @@ use Zend_Controller_Request_Abstract as Request;
 use Zend_Controller_Response_Abstract as Response;
 
 /**
- * @category   Humus
  * @package    ZeframMvc
  */
 interface ApplicationInterface extends EventsCapableInterface

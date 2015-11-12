@@ -21,7 +21,6 @@ namespace ZeframMvc\Service;
 use Zend\Mvc\Service\ServiceManagerConfig as ZendServiceManagerConfig;
 
 /**
- * @category   Humus
  * @package    ZeframMvc
  * @subpackage Service
  */

@@ -7,7 +7,7 @@ use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 class Container implements ServiceManagerAwareInterface
 {
-    /**
+    /**     
      * @var ServiceManager
      */
     protected $serviceManager;
@@ -39,11 +39,18 @@ class Container implements ServiceManagerAwareInterface
     }
 
     /**
+     * When accessing services via Bootstrap container resources
+     * are checked first, then other services.
+     *
      * @param string $key
      * @return mixed
      */
     public function __get($key)
     {
+        $resourceKey = $this->getResourceKey($key);
+        if ($this->serviceManager->has($resourceKey)) {
+            return $this->serviceManager->get($resourceKey);
+        }
         return $this->serviceManager->get($key);
     }
 
@@ -53,7 +60,8 @@ class Container implements ServiceManagerAwareInterface
      */
     public function __set($key, $value)
     {
-        $this->serviceManager->setService($key, $value);
+        $resourceKey = $this->getResourceKey($key);
+        $this->serviceManager->setService($resourceKey, $value);
     }
 
     /**
@@ -62,7 +70,8 @@ class Container implements ServiceManagerAwareInterface
      */
     public function __isset($key)
     {
-        return $this->serviceManager->has($key);
+        $resourceKey = $this->getResourceKey($key);
+        return $this->serviceManager->has($resourceKey) || $this->serviceManager->has($key);
     }
 
     /**
@@ -70,6 +79,20 @@ class Container implements ServiceManagerAwareInterface
      */
     public function __unset($key)
     {
-        $this->serviceManager->setService($key, null);
+        $resourceKey = $this->getResourceKey($key);
+        if ($this->serviceManager->has($resourceKey)) {
+            // this may throw depending on service manager settings
+            $this->serviceManager->setService($resourceKey, null);
+        }
+    }
+
+    /**
+     * @param string $key
+     * @return string
+     */
+    protected function getResourceKey($key)
+    {
+        return sprintf('resource.%s', $key);
     }
 }
+

@@ -17,19 +17,16 @@ use Zend\ModuleManager\ModuleEvent;
  *
  * Attaches a customized ModuleLoaderListener that can properly handle
  * ZF1 naming conventions of module directories.
+ *
+ * The code below is directly copied from Zend\ModuleManager\Listener\DefaultListenerAggregate::attach()
+ * - which hasn't changed since 15 Jan 2013 (zendframework/zend-modulemanager@4684ed2).
+ * Please note that ModuleLoaderListener class used is not the original
+ * one due to used 'use' directives.
  */
 class DefaultListenerAggregate extends Zf2DefaultListenerAggregate
 {
-    /**
-     * {@inheritDoc}
-     */
     public function attach(EventManagerInterface $events)
     {
-        // The code below is directly copied from Zend\ModuleManager\Listener\DefaultListenerAggregate::attach()
-        // - which hasn't changed since 15 Jan 2013 (zendframework/zend-modulemanager@4684ed2).
-        // Please note that ModuleLoaderListener class used is not the original
-        // one due to used 'use' directives.
-
         $options                     = $this->getOptions();
         $configListener              = $this->getConfigListener();
         $locatorRegistrationListener = new LocatorRegistrationListener($options);
@@ -49,5 +46,13 @@ class DefaultListenerAggregate extends Zf2DefaultListenerAggregate
         $this->listeners[] = $events->attach($locatorRegistrationListener);
         $this->listeners[] = $events->attach($configListener);
         return $this;
+    }
+
+    public function getConfigListener()
+    {
+        if (!$this->configListener instanceof ConfigMergerInterface) {
+            $this->setConfigListener(new ConfigListener($this->getOptions()));
+        }
+        return $this->configListener;
     }
 }

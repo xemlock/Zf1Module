@@ -7,7 +7,6 @@ use ZeframMvc\Bootstrap\Container;
 use ZeframMvc\Exception\InvalidArgumentException;
 use ZeframMvc\Exception\UnsupportedMethodCallException;
 
-
 /**
  * Class Bootstrap
  *
@@ -43,18 +42,6 @@ class Bootstrap extends \Zend_Application_Bootstrap_BootstrapAbstract
             $this->setContainer(new Container($this->_serviceManager));
         }
         return $this->_container;
-    }
-
-    public function hasResource($name)
-    {
-        // no name mangling as it is entirely done by the service manager
-        return $this->_serviceManager->has($name);
-    }
-
-    public function getResource($name)
-    {
-        // no name mangling as it is entirely done by the service manager
-        return $this->_serviceManager->get($name);
     }
 
     protected function _bootstrap($resource = null)

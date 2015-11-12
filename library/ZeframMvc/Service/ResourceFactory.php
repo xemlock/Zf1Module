@@ -55,7 +55,7 @@ class ResourceFactory implements AbstractFactoryInterface
         $config = $serviceLocator->has('Config') ? $serviceLocator->get('Config') : array();
 
         $configKey = $this->getConfigKey($requestedName);
-        $options = isset($config[$configKey]) ? $config[$configKey] : array();
+        $options = isset($config['resources'][$configKey]) ? $config['resources'][$configKey] : array();
 
         $service = $pluginResource->setOptions($options)->init();
 
@@ -78,6 +78,7 @@ class ResourceFactory implements AbstractFactoryInterface
      */
     public function getConfigKey($serviceName)
     {
+        return strtolower($serviceName);
         // Create service config key by transforming the name from CamelCase
         // to snake_case, i.e. config key for 'CacheManager' is 'cache_manager',
         // for 'MultiDb' (or 'MultiDB') is 'multi_db'
