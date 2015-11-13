@@ -3,6 +3,7 @@
 namespace ZeframMvc\ModuleManager\Listener;
 
 use Zend\EventManager\EventManagerInterface;
+use Zend\ModuleManager\Listener\ConfigMergerInterface;
 use Zend\ModuleManager\Listener\DefaultListenerAggregate as Zf2DefaultListenerAggregate;
 use Zend\ModuleManager\Listener\LocatorRegistrationListener;
 use Zend\ModuleManager\Listener\ModuleResolverListener;
@@ -18,10 +19,9 @@ use Zend\ModuleManager\ModuleEvent;
  * Attaches a customized ModuleLoaderListener that can properly handle
  * ZF1 naming conventions of module directories.
  *
- * The code below is directly copied from Zend\ModuleManager\Listener\DefaultListenerAggregate::attach()
+ * The code is directly copied from Zend\ModuleManager\Listener\DefaultListenerAggregate::attach()
  * - which hasn't changed since 15 Jan 2013 (zendframework/zend-modulemanager@4684ed2).
- * Please note that ModuleLoaderListener class used is not the original
- * one due to used 'use' directives.
+ * Please note that classes are resolved differently due to used 'use' directives.
  */
 class DefaultListenerAggregate extends Zf2DefaultListenerAggregate
 {

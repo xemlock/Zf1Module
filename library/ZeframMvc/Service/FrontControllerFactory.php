@@ -12,9 +12,6 @@ class FrontControllerFactory implements FactoryInterface
     /**
      * Create front controller service
      *
-     * As a side-effect if a Layout service is present in the Service
-     * Locator it will be retrieved.
-     *
      * @param ServiceLocatorInterface $serviceLocator
      * @return Zend_Controller_Front
      */
@@ -22,7 +19,7 @@ class FrontControllerFactory implements FactoryInterface
     {
         $config = $serviceLocator->has('Config') ? $serviceLocator->get('Config') : array();
 
-        $options = isset($config['front_controller']) ? $config['front_controller'] : array();
+        $options = isset($config['resources']['frontcontroller']) ? $config['resources']['frontcontroller'] : array();
         $class = isset($options['class']) ? $options['class'] : 'Zend_Controller_Front';
 
         /** @var $frontController Zend_Controller_Front */
@@ -39,22 +36,6 @@ class FrontControllerFactory implements FactoryInterface
 
         // Setup front controller options
         $this->init($frontController, $options);
-
-        // Retrieve controller paths from loaded modules and add them to dispatcher:
-        // - if a module provides getControllerDirectory() method, its return value
-        //   is used as a controller path for this module
-        // - otherwise a default controller path will be used (module/controllers)
-        $moduleManager = $serviceLocator->get('ModuleManager');
-
-        foreach ($moduleManager->getLoadedModules() as $module => $moduleObj) {
-            if (method_exists($moduleObj, 'getControllerDirectory')) {
-                $dir = $moduleObj->getControllerDirectory();
-            } else {
-                $ref = new \ReflectionClass($moduleObj);
-                $dir = dirname($ref->getFileName()) . '/' . $frontController->getModuleControllerDirectoryName();
-            }
-            $frontController->addControllerDirectory($dir, $module);
-        }
 
         return $frontController;
     }
