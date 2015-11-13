@@ -28,8 +28,9 @@ class ServiceListenerFactory extends ZendServiceListenerFactory
             'Bootstrap'             => 'ZeframMvc\Service\BootstrapFactory',
             'Config'                => 'Zend\Mvc\Service\ConfigFactory',
             'DependencyInjector'    => 'Zend\Mvc\Service\DiFactory',
-            'resource.FrontController'       => 'ZeframMvc\Service\FrontControllerFactory',
+            'resource.FrontController' => 'ZeframMvc\Service\FrontControllerFactory',
             'Router'                => 'ZeframMvc\Service\RouterFactory',
+            'LegacyApplication'     => 'ZeframMvc\Service\LegacyApplicationFactory',
         ),
         'aliases' => array(
             'Configuration'             => 'Config',

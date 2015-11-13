@@ -3,9 +3,9 @@
 namespace ZeframMvc\Service;
 
 use ZeframMvc\Bootstrap\Bootstrap;
+use ZeframMvc\Options\BootstrapOptions;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Stdlib\ArrayUtils;
 
 class BootstrapFactory implements FactoryInterface
 {
@@ -13,28 +13,15 @@ class BootstrapFactory implements FactoryInterface
      * Create the Bootstrap service
      *
      * @param  ServiceLocatorInterface $serviceLocator
-     * @return \ZeframMvc\Bootstrap\Bootstrap;
+     * @return Bootstrap
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $config = $serviceLocator->has('Config') ? $serviceLocator->get('Config') : array();
-        $bootstrapConfig = isset($config['bootstrap']) ? $config['bootstrap'] : array();
+        $options = new BootstrapOptions($config);
 
-        if (isset($config['resources'])) {
-            $resourceConfig = (array) $config['resources'];
-            foreach ($resourceConfig as $key => $value) {
-                if (is_string($key) && $key !== ($resourceKey = strtolower($key))) {
-                    $resourceConfig[$resourceKey] = ArrayUtils::merge(
-                        $resourceConfig[$resourceKey],
-                        $value
-                    );
-                }
-            }
-        } else {
-            $resourceConfig = array();
-        }
-        $bootstrapConfig['resources'] = $resourceConfig;
-
-        return new Bootstrap($serviceLocator, $bootstrapConfig);
+        $bootstrap = new Bootstrap($serviceLocator->get('LegacyApplication'));
+        $bootstrap->setOptions($options->toArray());
+        return $bootstrap;
     }
 }
