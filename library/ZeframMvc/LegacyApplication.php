@@ -50,4 +50,19 @@ class LegacyApplication extends \Zend_Application implements ServiceManagerAware
     {
         return $this->_serviceManager;
     }
+
+    /**
+     * Get bootstrap object
+     *
+     * If bootstrap not present it is retrieved from Service Manager.
+     *
+     * @return \Zend_Application_Bootstrap_BootstrapAbstract
+     */
+    public function getBootstrap()
+    {
+        if ($this->_bootstrap === null) {
+            return $this->getServiceManager()->get('ZeframMvc\Bootstrap');
+        }
+        return $this->_bootstrap;
+    }
 }

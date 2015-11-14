@@ -25,7 +25,7 @@ class ResourceFactory implements AbstractFactoryInterface
         $resourceName = substr($requestedName, 9);
 
         /** @var $bootstrap \Zend_Application_Bootstrap_ResourceBootstrapper */
-        $bootstrap = $serviceLocator->get('Bootstrap');
+        $bootstrap = $serviceLocator->get('ZeframMvc\Bootstrap');
 
         /** @var $pluginResource \Zend_Application_Resource_ResourceAbstract */
         $pluginResource = $bootstrap->getPluginResource($resourceName);

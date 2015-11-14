@@ -65,7 +65,7 @@ class DispatchListener implements ListenerAggregateInterface
     {
         $application = $e->getApplication();
         $sm = $application->getServiceManager();
-        $front = $sm->get('Bootstrap')->getResource('FrontController');
+        $front = $sm->get('ZeframMvc\Bootstrap')->getResource('FrontController');
         $front->returnResponse(true); // Response must be always returned
         $response = $front->dispatch();
         return $this->complete($response, $e);
