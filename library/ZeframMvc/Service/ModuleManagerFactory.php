@@ -48,7 +48,7 @@ class ModuleManagerFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         if (!$serviceLocator->has('ServiceListener')) {
-            $serviceLocator->setFactory('ServiceListener', 'ZeframMvc\Service\ServiceListenerFactory');
+            $serviceLocator->setFactory('ServiceListener', 'Zend\Mvc\Service\ServiceListenerFactory');
         }
 
         $configuration    = $serviceLocator->get('ApplicationConfig');
@@ -62,12 +62,6 @@ class ModuleManagerFactory implements FactoryInterface
             'Zend\ModuleManager\Feature\ServiceProviderInterface',
             'getServiceConfig'
         );
-        /*$serviceListener->addServiceManager(
-            'RoutePluginManager',
-            'route_manager',
-            'Zend\ModuleManager\Feature\RouteProviderInterface',
-            'getRouteConfig'
-        );*/
 
         $events = $serviceLocator->get('EventManager');
         $events->attach($defaultListeners);
@@ -78,6 +72,11 @@ class ModuleManagerFactory implements FactoryInterface
 
         $moduleManager = new ModuleManager($configuration['modules'], $events);
         $moduleManager->setEvent($moduleEvent);
+
+        // add ZeframMvc module
+        $modules = $moduleManager->getModules();
+        array_unshift($modules, 'ZeframMvc');
+        $moduleManager->setModules($modules);
 
         return $moduleManager;
     }

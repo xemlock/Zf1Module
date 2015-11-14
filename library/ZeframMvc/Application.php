@@ -22,8 +22,9 @@ use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManagerInterface;
 use ZeframMvc\Service\ServiceManagerConfig;
 use Zend\ServiceManager\ServiceManager;
+use Zend\Mvc\MvcEvent;
+use Zend\Stdlib\ResponseInterface;
 use Zend_Controller_Request_Abstract as Request;
-use Zend_Controller_Response_Abstract as Response;
 
 /**
  * Main application class for invoking applications
@@ -55,67 +56,8 @@ use Zend_Controller_Response_Abstract as Response;
  * @category   Humus
  * @package    ZeframMvc
  */
-class Application implements
-    ApplicationInterface,
-    EventManagerAwareInterface
+class Application extends \Zend\Mvc\Application
 {
-
-    /**
-     * @var array
-     */
-    protected $config = null;
-
-    /**
-     * MVC event token
-     * @var MvcEvent
-     */
-    protected $event;
-
-    /**
-     * @var EventManagerInterface
-     */
-    protected $events;
-
-    /**
-     * @var Request
-     */
-    protected $request;
-
-    /**
-     * @var Response
-     */
-    protected $response;
-
-    /**
-     * @var ServiceManager
-     */
-    protected $serviceManager = null;
-
-    /**
-     * Constructor
-     *
-     * @param mixed $config
-     * @param ServiceManager $serviceManager
-     */
-    public function __construct($config, ServiceManager $serviceManager)
-    {
-        $this->config  = $config;
-        $this->serviceManager = $serviceManager;
-        $this->setEventManager($serviceManager->get('EventManager'));
-        $this->request        = $serviceManager->get('Request');
-        $this->response       = $serviceManager->get('Response');
-    }
-
-    /**
-     * Retrieve the application configuration
-     *
-     * @return array|object
-     */
-    public function getConfig()
-    {
-        return $this->serviceManager->get('Config');
-    }
-
     /**
      * Bootstrap the application
      *
@@ -129,90 +71,21 @@ class Application implements
         $serviceManager = $this->serviceManager;
         $events         = $this->getEventManager();
 
-        $events->attach($serviceManager->get('DispatchListener'));
-        $events->attach($serviceManager->get('SendResponseListener'));
+        // these listeners are attached in module
+        // $events->attach($serviceManager->get('DispatchListener'));
+        // $events->attach($serviceManager->get('SendResponseListener'));
 
         // Setup MVC Event
         $this->event = $event  = new MvcEvent();
         $event->setTarget($this);
         $event->setApplication($this)
-              ->setRequest($this->getRequest())
-              ->setResponse($this->getResponse())
-              ->setRouter($serviceManager->get('Router'));
+            ->setRequest($this->getRequest())
+            ->setResponse($this->getResponse())
+            ->setRouter($serviceManager->get('Router'));
 
         // Trigger bootstrap events
         $events->trigger(MvcEvent::EVENT_BOOTSTRAP, $event);
         return $this;
-    }
-
-    /**
-     * Retrieve the service manager
-     *
-     * @return ServiceManager
-     */
-    public function getServiceManager()
-    {
-        return $this->serviceManager;
-    }
-
-    /**
-     * Get the request object
-     *
-     * @return Request
-     */
-    public function getRequest()
-    {
-        return $this->request;
-    }
-
-    /**
-     * Get the response object
-     *
-     * @return Response
-     */
-    public function getResponse()
-    {
-        return $this->response;
-    }
-
-    /**
-     * Get the MVC event instance
-     *
-     * @return MvcEvent
-     */
-    public function getMvcEvent()
-    {
-        return $this->event;
-    }
-
-    /**
-     * Set the event manager instance
-     *
-     * @param  EventManagerInterface $eventManager
-     * @return Application
-     */
-    public function setEventManager(EventManagerInterface $eventManager)
-    {
-        $eventManager->setIdentifiers(array(
-            'Zend\Mvc\Application', // for compatibility with zf2 module manager listeners,
-                                    // so we don't need to subclass all listeners.
-            __CLASS__,
-            get_called_class(),
-        ));
-        $this->events = $eventManager;
-        return $this;
-    }
-
-    /**
-     * Retrieve the event manager
-     *
-     * Lazy-loads an EventManager instance if none registered.
-     *
-     * @return EventManagerInterface
-     */
-    public function getEventManager()
-    {
-        return $this->events;
     }
 
     /**
@@ -240,7 +113,8 @@ class Application implements
         $serviceManager = new ServiceManager(new ServiceManagerConfig($smConfig));
         $serviceManager->setService('ApplicationConfig', $configuration);
         $serviceManager->get('ModuleManager')->loadModules();
-        return $serviceManager->get('Application')->bootstrap();
+        $application = new self($serviceManager->get('Config'), $serviceManager);
+        return $application->bootstrap();
     }
 
     /**
@@ -255,7 +129,7 @@ class Application implements
 
         // Define callback used to determine whether or not to short-circuit
         $shortCircuit = function ($r) use ($event) {
-            if ($r instanceof Response) {
+            if ($r instanceof ResponseInterface) {
                 return true;
             }
             return false;
@@ -266,8 +140,9 @@ class Application implements
 
         // Complete response
         $response = $result->last();
-        if ($response instanceof Response) {
+        if ($response instanceof ResponseInterface) {
             $event->setTarget($this);
+            $event->setResponse($response);
             $events->trigger(MvcEvent::EVENT_FINISH, $event);
         }
 

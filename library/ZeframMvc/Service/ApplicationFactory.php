@@ -26,6 +26,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  * @category   Humus
  * @package    ZeframMvc
  * @subpackage Service
+ * @deprecated
  */
 class ApplicationFactory implements FactoryInterface
 {

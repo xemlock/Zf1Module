@@ -25,9 +25,10 @@ class FrontControllerFactory implements FactoryInterface
         /** @var $frontController Zend_Controller_Front */
         $frontController = call_user_func(array($class, 'getInstance'));
 
-        $frontController->setRouter($serviceLocator->get('Router'));
-        $frontController->setRequest($serviceLocator->get('Request'));
-        $frontController->setResponse($serviceLocator->get('Response'));
+        // $frontController->setDispatcher($serviceLocator->get('Dispatcher'));
+        $frontController->setRouter($serviceLocator->get('ZeframMvc\Router')); // initialize router, otherwise it will not be initialized
+        $frontController->setRequest($serviceLocator->get('ZeframMvc\Request'));
+        $frontController->setResponse($serviceLocator->get('ZeframMvc\Response'));
 
         // Set 'bootstrap' param so that retrieving resources from bootstrap
         // via front controller still works

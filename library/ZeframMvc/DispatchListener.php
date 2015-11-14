@@ -20,7 +20,7 @@ namespace ZeframMvc;
 
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
-use Zend_Controller_Response_Abstract as Response;
+use Zend\Mvc\MvcEvent;
 
 class DispatchListener implements ListenerAggregateInterface
 {
@@ -37,7 +37,7 @@ class DispatchListener implements ListenerAggregateInterface
      */
     public function attach(EventManagerInterface $events)
     {
-        $this->listeners[] = $events->attach(MvcEvent::EVENT_DISPATCH, array($this, 'onDispatch'));
+        $this->listeners[] = $events->attach(MvcEvent::EVENT_DISPATCH, array($this, 'onDispatch'), 1000);
     }
 
     /**
@@ -65,22 +65,24 @@ class DispatchListener implements ListenerAggregateInterface
     {
         $application = $e->getApplication();
         $sm = $application->getServiceManager();
+        /** @var $front \Zend_Controller_Front */
         $front = $sm->get('ZeframMvc\Bootstrap')->getResource('FrontController');
         $front->returnResponse(true); // Response must be always returned
-        $response = $front->dispatch();
+        $response = new Response($front->dispatch());
         return $this->complete($response, $e);
     }
 
     /**
      * Complete the dispatch
      *
-     * @param  Response $response
+     * @param  mixed $response
      * @param  MvcEvent $event
      * @return mixed
      */
-    protected function complete(Response $response, MvcEvent $event)
+    protected function complete($return, MvcEvent $event)
     {
-        $event->setResult($response);
-        return $response;
+        // echo $return->toString();exit;
+        $event->setResult($return);
+        return $return;
     }
 }
