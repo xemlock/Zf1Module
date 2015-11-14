@@ -18,7 +18,6 @@
 
 namespace ZeframMvc\Service;
 
-use ZeframMvc\ModuleManager\Listener\LocaleListener;
 use ZeframMvc\ModuleManager\Listener\DefaultListenerAggregate;
 use Zend\ModuleManager\Listener\ListenerOptions;
 use Zend\ModuleManager\ModuleEvent;

@@ -25,7 +25,6 @@ class FrontControllerFactory implements FactoryInterface
         /** @var $frontController Zend_Controller_Front */
         $frontController = call_user_func(array($class, 'getInstance'));
 
-        $frontController->setDispatcher($serviceLocator->get('Dispatcher'));
         $frontController->setRouter($serviceLocator->get('Router'));
         $frontController->setRequest($serviceLocator->get('Request'));
         $frontController->setResponse($serviceLocator->get('Response'));

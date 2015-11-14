@@ -17,7 +17,6 @@ class ServiceListenerFactory extends ZendServiceListenerFactory
      */
     protected $defaultServiceConfig = array(
         'invokables' => array(
-            'Dispatcher'            => 'ZeframMvc\Dispatcher',
             'DispatchListener'      => 'ZeframMvc\DispatchListener',
             'SendResponseListener'  => 'ZeframMvc\SendResponseListener',
             'Request'               => 'Zend_Controller_Request_Http',
