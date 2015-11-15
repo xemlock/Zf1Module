@@ -19,30 +19,22 @@ class ServiceListenerFactory extends ZendServiceListenerFactory
      */
     protected $defaultServiceConfig = array(
         'invokables' => array(
-            'ZeframMvc\DispatchListener'     => 'ZeframMvc\DispatchListener',
-            'ZeframMvc\SendResponseListener' => 'ZeframMvc\SendResponseListener',
-            'ZeframMvc\Request'              => 'Zend_Controller_Request_Http',
-            'ZeframMvc\Response'             => 'Zend_Controller_Response_Http'
+            'DispatchListener'     => 'Zend\Mvc\DispatchListener',
+            'RouteListener'        => 'Zend\Mvc\RouteListener',
+            'Router'               => 'Zend\Mvc\Router\Http\TreeRouteStack',
+            'SendResponseListener' => 'Zend\Mvc\SendResponseListener',
         ),
         'factories' => array(
-            'Application'                 => 'ZeframMvc\Service\ApplicationFactory',
-            'Config'                      => 'Zend\Mvc\Service\ConfigFactory',
-            'DependencyInjector'          => 'Zend\Mvc\Service\DiFactory',
-            'Router'                      => 'Zend\Mvc\Service\RouterFactory',
-            'resource.FrontController'    => 'ZeframMvc\Service\FrontControllerFactory',
-            'ZeframMvc\Router'            => 'ZeframMvc\Service\RouterFactory',
-            'ZeframMvc\Bootstrap'         => 'ZeframMvc\Service\BootstrapFactory',
-            'ZeframMvc\LegacyApplication' => 'ZeframMvc\Service\LegacyApplicationFactory',
+            'Application'        => 'ZeframMvc\Service\ApplicationFactory',
+            'Config'             => 'Zend\Mvc\Service\ConfigFactory',
+            'DependencyInjector' => 'Zend\Mvc\Service\DiFactory',
+            'Request'            => 'Zend\Mvc\Service\RequestFactory',
+            'Response'           => 'Zend\Mvc\Service\ResponseFactory',
         ),
         'aliases' => array(
             'Configuration'            => 'Config',
             'Di'                       => 'DependencyInjector',
             'Zend\Di\LocatorInterface' => 'DependencyInjector',
-            'Bootstrap'                => 'ZeframMvc\Bootstrap',
-            'LegacyApplication'        => 'ZeframMvc\LegacyApplication',
         ),
-        'abstract_factories' => array(
-            'ZeframMvc\Service\ResourceFactory',
-        ),
-  );
+    );
 }

@@ -6,18 +6,6 @@ use Zend\Mvc\MvcEvent;
 
 class Module
 {
-    public function onBootstrap(MvcEvent $e)
-    {
-        $application = $e->getApplication();
-
-        $serviceManager = $application->getServiceManager();
-
-        $events = $application->getEventManager();
-        $events->attach($serviceManager->get('ZeframMvc\DispatchListener'));
-        $events->attach($serviceManager->get('ZeframMvc\SendResponseListener'));
-        $events->attach($serviceManager->get('ZeframMvc\RouteListener'));
-    }
-
     public function getServiceConfig()
     {
         return array(
@@ -43,5 +31,17 @@ class Module
                 'ZeframMvc\Service\ResourceFactory',
             ),
         );
+    }
+
+    public function onBootstrap(MvcEvent $e)
+    {
+        $application = $e->getApplication();
+
+        $serviceManager = $application->getServiceManager();
+
+        $events = $application->getEventManager();
+        $events->attach($serviceManager->get('ZeframMvc\DispatchListener'));
+        $events->attach($serviceManager->get('ZeframMvc\SendResponseListener'));
+        $events->attach($serviceManager->get('ZeframMvc\RouteListener'));
     }
 }
