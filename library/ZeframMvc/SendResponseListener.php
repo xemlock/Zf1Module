@@ -4,7 +4,6 @@ namespace ZeframMvc;
 
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
-use Zend\Mvc\MvcEvent;
 
 class SendResponseListener implements ListenerAggregateInterface
 {
@@ -43,10 +42,10 @@ class SendResponseListener implements ListenerAggregateInterface
     /**
      * Send the response
      *
-     * @param  MvcEvent $event
+     * @param  \Zend\Mvc\MvcEvent $event
      * @return void
      */
-    public function sendResponse(MvcEvent $event)
+    public function sendResponse(\Zend\Mvc\MvcEvent $event)
     {
         $response = $event->getResponse();
 

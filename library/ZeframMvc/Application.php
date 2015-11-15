@@ -59,6 +59,12 @@ use Zend_Controller_Request_Abstract as Request;
 class Application extends \Zend\Mvc\Application
 {
     /**
+     * No default listeners, they must be added explicitly
+     * @var array()
+     */
+    protected $defaultListeners = array();
+
+    /**
      * Bootstrap the application
      *
      * Defines and binds the MvcEvent, and passes it the request, response, and
