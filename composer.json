@@ -1,15 +1,11 @@
 {
-    "name": "xemlock/zefram-mvc",
+    "name": "zefram/zefram-mvc",
     "type": "library",
-    "description": "ZF2's ModuleManager and ServiceManager in a ZF1 application",
+    "description": "Adds support for running ZF1 modules in ZF2 application",
     "keywords": ["zf2", "zf1", "mvc"],
-    "homepage": "https://github.com/xemlock/zefram-mvc",
+    "homepage": "https://github.com/zeframphp/zefram-mvc",
     "license": "MIT",
     "authors": [
-        {
-            "name": "Sascha-Oliver Prolic",
-            "email": "saschaprolic@googlemail.com"
-        },
         {
             "name": "xemlock",
             "email": "xemlock@gmail.com"
