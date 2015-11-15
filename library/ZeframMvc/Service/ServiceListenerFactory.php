@@ -21,7 +21,7 @@ class ServiceListenerFactory extends ZendServiceListenerFactory
         'invokables' => array(
             'DispatchListener'     => 'Zend\Mvc\DispatchListener',
             'RouteListener'        => 'Zend\Mvc\RouteListener',
-            'Router'               => 'Zend\Mvc\Router\Http\TreeRouteStack',
+            'Router'               => 'ZeframMvc\Router\EmptyRouteStack',
             'SendResponseListener' => 'Zend\Mvc\SendResponseListener',
         ),
         'factories' => array(
