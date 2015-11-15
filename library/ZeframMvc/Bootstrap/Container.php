@@ -5,7 +5,7 @@ namespace ZeframMvc\Bootstrap;
 use Zend\ServiceManager\ServiceManager;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 
-class Container implements ServiceManagerAwareInterface
+class Container extends \Zend_Registry implements ServiceManagerAwareInterface
 {
     /**     
      * @var ServiceManager
@@ -17,6 +17,7 @@ class Container implements ServiceManagerAwareInterface
      */
     public function __construct(ServiceManager $serviceManager)
     {
+        parent::__construct(array(), \ArrayObject::ARRAY_AS_PROPS);
         $this->setServiceManager($serviceManager);
     }
 
@@ -39,13 +40,22 @@ class Container implements ServiceManagerAwareInterface
     }
 
     /**
+     * @param string $key
+     * @return string
+     */
+    protected function getResourceKey($key)
+    {
+        return sprintf('resource.%s', $key);
+    }
+
+    /**
      * When accessing services via Bootstrap container resources
      * are checked first, then other services.
      *
      * @param string $key
      * @return mixed
      */
-    public function __get($key)
+    public function offsetGet($key)
     {
         $resourceKey = $this->getResourceKey($key);
         if ($this->serviceManager->has($resourceKey)) {
@@ -54,30 +64,19 @@ class Container implements ServiceManagerAwareInterface
         return $this->serviceManager->get($key);
     }
 
-    /**
-     * @param string $key
-     * @param mixed $value
-     */
-    public function __set($key, $value)
+    public function offsetSet($key, $value)
     {
         $resourceKey = $this->getResourceKey($key);
         $this->serviceManager->setService($resourceKey, $value);
     }
 
-    /**
-     * @param string $key
-     * @return bool
-     */
-    public function __isset($key)
+    public function offsetExists($key)
     {
         $resourceKey = $this->getResourceKey($key);
         return $this->serviceManager->has($resourceKey) || $this->serviceManager->has($key);
     }
 
-    /**
-     * @param string $key
-     */
-    public function __unset($key)
+    public function offsetUnset($key)
     {
         $resourceKey = $this->getResourceKey($key);
         if ($this->serviceManager->has($resourceKey)) {
@@ -85,14 +84,4 @@ class Container implements ServiceManagerAwareInterface
             $this->serviceManager->setService($resourceKey, null);
         }
     }
-
-    /**
-     * @param string $key
-     * @return string
-     */
-    protected function getResourceKey($key)
-    {
-        return sprintf('resource.%s', $key);
-    }
 }
-

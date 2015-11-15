@@ -26,11 +26,11 @@ class Module
                 'ZeframMvc\RouteListener'        => 'ZeframMvc\RouteListener',
                 'ZeframMvc\SendResponseListener' => 'ZeframMvc\SendResponseListener',
                 'ZeframMvc\Request'              => 'Zend_Controller_Request_Http',
-                'ZeframMvc\Response'             => 'Zend_Controller_Response_Http'
+                'ZeframMvc\Response'             => 'Zend_Controller_Response_Http',
             ),
             'factories' => array(
-                // 'Application'                    => 'ZeframMvc\Service\ApplicationFactory',
                 'resource.FrontController'       => 'ZeframMvc\Service\FrontControllerFactory',
+                'ZeframMvc\Container'            => 'ZeframMvc\Service\ContainerFactory',
                 'ZeframMvc\Router'               => 'ZeframMvc\Service\RouterFactory',
                 'ZeframMvc\Bootstrap'            => 'ZeframMvc\Service\BootstrapFactory',
                 'ZeframMvc\LegacyApplication'    => 'ZeframMvc\Service\LegacyApplicationFactory',

@@ -21,7 +21,9 @@ class BootstrapFactory implements FactoryInterface
         $options = new BootstrapOptions($config);
 
         $bootstrap = new Bootstrap($serviceLocator->get('ZeframMvc\LegacyApplication'));
+        $bootstrap->setContainer($serviceLocator->get('ZeframMvc\Container'));
         $bootstrap->setOptions($options->toArray());
+
         return $bootstrap;
     }
 }
