@@ -9,9 +9,6 @@ use Zend\ModuleManager\Listener\ListenerOptions;
 
 class ModuleLoaderListener extends Zf2ModuleLoaderListener
 {
-    /**
-     * {@inheritDoc}
-     */
     public function __construct(ListenerOptions $options = null)
     {
         // Skip parent constructor to avoid instantiation of moduleLoader,

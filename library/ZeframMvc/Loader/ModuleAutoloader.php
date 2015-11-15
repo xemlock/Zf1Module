@@ -6,9 +6,6 @@ use Zend\Loader\ModuleAutoloader as Zf2ModuleAutoloader;
 
 class ModuleAutoloader extends Zf2ModuleAutoloader
 {
-    /**
-     * {@inheritDoc}
-     */
     public function autoload($class)
     {
         if (false !== ($classLoaded = parent::autoload($class))) {

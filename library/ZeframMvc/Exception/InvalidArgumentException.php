@@ -19,7 +19,6 @@
 namespace ZeframMvc\Exception;
 
 /**
- * @category Humus
  * @package ZeframMvc
  * @subpackage Exception
  */
