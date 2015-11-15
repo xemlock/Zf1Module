@@ -3,7 +3,6 @@
 namespace ZeframMvc\Options;
 
 use ZeframMvc\Exception\InvalidArgumentException;
-use Zend\Stdlib\AbstractOptions;
 use Zend\Stdlib\ArrayUtils;
 
 // this is to avoid processing of whole config array in bootstrap. Only
@@ -13,8 +12,6 @@ use Zend\Stdlib\ArrayUtils;
 // is different.
 class BootstrapOptions extends AbstractOptions
 {
-    protected $__strictMode__ = false;
-
     /**
      * @var array
      */
@@ -73,17 +70,5 @@ class BootstrapOptions extends AbstractOptions
     public function getPluginPaths()
     {
         return $this->pluginPaths;
-    }
-
-    public function toArray()
-    {
-        $array = array();
-        foreach ($this as $key => $value) {
-            if ($key === '__strictMode__' || $value === null) {
-                continue;
-            }
-            $array[strtolower($key)] = $value;
-        }
-        return $array;
     }
 }
