@@ -55,44 +55,15 @@ use Zend_Controller_Request_Abstract as Request;
  *
  * @category   Humus
  * @package    ZeframMvc
+ * @deprecated
  */
 class Application extends \Zend\Mvc\Application
 {
     /**
-     * No default listeners, they must be added explicitly
+     * No default listeners, they must be added explicitly in modules
      * @var array()
      */
     protected $defaultListeners = array();
-
-    /**
-     * Bootstrap the application
-     *
-     * Defines and binds the MvcEvent, and passes it the request, response, and
-     * router. Triggers the bootstrap event.
-     *
-     * @return Application
-     */
-    public function bootstrap()
-    {
-        $serviceManager = $this->serviceManager;
-        $events         = $this->getEventManager();
-
-        // these listeners are attached in module
-        // $events->attach($serviceManager->get('DispatchListener'));
-        // $events->attach($serviceManager->get('SendResponseListener'));
-
-        // Setup MVC Event
-        $this->event = $event  = new MvcEvent();
-        $event->setTarget($this);
-        $event->setApplication($this)
-            ->setRequest($this->getRequest())
-            ->setResponse($this->getResponse())
-            ->setRouter($serviceManager->get('Router'));
-
-        // Trigger bootstrap events
-        $events->trigger(MvcEvent::EVENT_BOOTSTRAP, $event);
-        return $this;
-    }
 
     /**
      * Static method for quick and easy initialization of the Application.

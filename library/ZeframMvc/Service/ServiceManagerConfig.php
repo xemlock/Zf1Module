@@ -23,6 +23,7 @@ use Zend\Mvc\Service\ServiceManagerConfig as ZendServiceManagerConfig;
 /**
  * @package    ZeframMvc
  * @subpackage Service
+ * @deprecated
  */
 class ServiceManagerConfig extends ZendServiceManagerConfig
 {

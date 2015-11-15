@@ -25,6 +25,7 @@ use Zend_Controller_Response_Abstract as Response;
 
 /**
  * @package    ZeframMvc
+ * @deprecated
  */
 interface ApplicationInterface extends EventsCapableInterface
 {

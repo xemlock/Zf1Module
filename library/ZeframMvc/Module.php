@@ -15,6 +15,7 @@ class Module
         $events = $application->getEventManager();
         $events->attach($serviceManager->get('ZeframMvc\DispatchListener'));
         $events->attach($serviceManager->get('ZeframMvc\SendResponseListener'));
+        $events->attach($serviceManager->get('ZeframMvc\RouteListener'));
     }
 
     public function getServiceConfig()
@@ -22,12 +23,13 @@ class Module
         return array(
             'invokables' => array(
                 'ZeframMvc\DispatchListener'     => 'ZeframMvc\DispatchListener',
+                'ZeframMvc\RouteListener'        => 'ZeframMvc\RouteListener',
                 'ZeframMvc\SendResponseListener' => 'ZeframMvc\SendResponseListener',
                 'ZeframMvc\Request'              => 'Zend_Controller_Request_Http',
                 'ZeframMvc\Response'             => 'Zend_Controller_Response_Http'
             ),
             'factories' => array(
-                'Application'                    => 'ZeframMvc\Service\ApplicationFactory',
+                // 'Application'                    => 'ZeframMvc\Service\ApplicationFactory',
                 'resource.FrontController'       => 'ZeframMvc\Service\FrontControllerFactory',
                 'ZeframMvc\Router'               => 'ZeframMvc\Service\RouterFactory',
                 'ZeframMvc\Bootstrap'            => 'ZeframMvc\Service\BootstrapFactory',
