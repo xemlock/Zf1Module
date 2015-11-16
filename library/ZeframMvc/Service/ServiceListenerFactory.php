@@ -8,7 +8,14 @@ use Zend\Mvc\Service\ServiceListenerFactory as ZendServiceListenerFactory;
  * @package    ZeframMvc
  * @subpackage Service
  *
- * Use this for minimal setup, to run only ZF1 modules
+ * Use this for minimal setup, to run only ZF1 modules by adding the following
+ * settings to your application.config.php:
+ *
+ *      'service_manager' => array(
+ *          'factories' => array(
+ *              'ServiceListener' => 'ZeframMvc\Service\ServiceListenerFactory',
+ *          ),
+ *      ),
  */
 class ServiceListenerFactory extends ZendServiceListenerFactory
 {

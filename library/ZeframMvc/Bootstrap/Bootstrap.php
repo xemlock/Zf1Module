@@ -14,11 +14,6 @@ use ZeframMvc\Exception\UnsupportedMethodCallException;
  */
 class Bootstrap extends \Zend_Application_Bootstrap_Bootstrap
 {
-    public function run()
-    {
-        throw new UnsupportedMethodCallException('Use ZeframMvc\Application::run() to run application');
-    }
-
     protected function _bootstrap($resource = null)
     {
         // no-op due to lazy loading, objects are to be initialized by

@@ -2,6 +2,8 @@
 
 namespace ZeframMvc;
 
+use Zend\Console\Console;
+use Zend\Mvc\Application as Zf2Application;
 use Zend\Mvc\MvcEvent;
 
 class Module
@@ -35,13 +37,48 @@ class Module
 
     public function onBootstrap(MvcEvent $e)
     {
+        $events = $e->getApplication()->getEventManager();
+        $events->attach(MvcEvent::EVENT_DISPATCH_ERROR, array($this, 'onDispatchError'), 1000);
+        $events->attach(MvcEvent::EVENT_RENDER, array($this, 'onRender'), 1000);
+        $events->attach(MvcEvent::EVENT_FINISH, array($this, 'onFinish'), 1000);
+    }
+
+    public function onDispatchError(MvcEvent $e)
+    {
+        if (Console::isConsole() || $e->getError() !== Zf2Application::ERROR_ROUTER_NO_MATCH) {
+            return;
+        }
+        $e->setParam('dispatch-zf1', true);
+        // TODO should event propagation be stopped?
+    }
+
+    public function onRender(MvcEvent $e)
+    {
+        if (!$e->getParam('dispatch-zf1')) {
+            return;
+        }
+        // disable ZF2 rendering if in ZF1 context
+        $e->stopPropagation(true);
+    }
+
+    public function onFinish(MvcEvent $e)
+    {
+        if (!$e->getParam('dispatch-zf1')) {
+            return;
+        }
+
         $application = $e->getApplication();
 
-        $serviceManager = $application->getServiceManager();
+        /** @var $bootstrap \Zend_Application_Bootstrap_Bootstrapper */
+        $bootstrap = $application->getServiceManager()->get('ZeframMvc\Bootstrap');
+        $bootstrap->bootstrap();
 
-        $events = $application->getEventManager();
-        $events->attach($serviceManager->get('ZeframMvc\DispatchListener'));
-        $events->attach($serviceManager->get('ZeframMvc\SendResponseListener'));
-        $events->attach($serviceManager->get('ZeframMvc\RouteListener'));
+        /** @var $response \Zend_Controller_Response_Abstract */
+        $response = $bootstrap->run();
+        if ($response) {
+            $response->sendResponse();
+        }
+
+        $e->stopPropagation(true);
     }
 }
