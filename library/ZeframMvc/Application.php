@@ -15,8 +15,6 @@ use Zend\Stdlib\ResponseInterface;
  * - Request
  * - Response
  * - Router
- * - DispatchListener
- * - SendResponseListener
  *
  * The most common workflow is:
  * <code>
@@ -39,8 +37,6 @@ class Application extends \Zend\Mvc\Application
      * @var array()
      */
     protected $defaultListeners = array(
-        'RouteListener',
-        'DispatchListener',
-        'SendResponseListener',
+        'RouteListener', // only this listener is required to run ZF1 application
     );
 }

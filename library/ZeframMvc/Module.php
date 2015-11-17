@@ -11,17 +11,8 @@ class Module
     public function getServiceConfig()
     {
         return array(
-            'invokables' => array(
-                'ZeframMvc\DispatchListener'     => 'ZeframMvc\DispatchListener',
-                'ZeframMvc\RouteListener'        => 'ZeframMvc\RouteListener',
-                'ZeframMvc\SendResponseListener' => 'ZeframMvc\SendResponseListener',
-                'ZeframMvc\Request'              => 'Zend_Controller_Request_Http',
-                'ZeframMvc\Response'             => 'Zend_Controller_Response_Http',
-            ),
             'factories' => array(
-                'resource.FrontController'       => 'ZeframMvc\Service\FrontControllerFactory',
                 'ZeframMvc\Container'            => 'ZeframMvc\Service\ContainerFactory',
-                'ZeframMvc\Router'               => 'ZeframMvc\Service\RouterFactory',
                 'ZeframMvc\Bootstrap'            => 'ZeframMvc\Service\BootstrapFactory',
                 'ZeframMvc\LegacyApplication'    => 'ZeframMvc\Service\LegacyApplicationFactory',
             ),

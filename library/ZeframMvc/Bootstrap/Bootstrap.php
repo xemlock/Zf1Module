@@ -14,9 +14,28 @@ use ZeframMvc\Exception\UnsupportedMethodCallException;
  */
 class Bootstrap extends \Zend_Application_Bootstrap_Bootstrap
 {
+    protected $_mustBootstrap = array(
+        'FrontController',
+        'Router',
+        'Layout',
+        'Translate',
+        'Locale',
+        'View',
+    );
+
     protected function _bootstrap($resource = null)
     {
         // no-op due to lazy loading, objects are to be initialized by
         // the service manager upon explicit request
+        if ($resource === null) {
+            $classResources = $this->getClassResources();
+            foreach ($this->_mustBootstrap as $name) {
+                if ($this->hasPluginResource($name) || ) {
+                    parent::_bootstrap($name);
+                }
+            }
+        } else {
+            parent::_bootstrap($resource);
+        }
     }
 }

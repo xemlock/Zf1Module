@@ -17,7 +17,8 @@ class ResourceFactory implements AbstractFactoryInterface
         /** @var $bootstrap \Zend_Application_Bootstrap_ResourceBootstrapper */
         $bootstrap = $serviceLocator->get('Bootstrap');
 
-        return $bootstrap->hasPluginResource($resourceName);
+        return $bootstrap->hasPluginResource($resourceName)
+            || method_exists($bootstrap, '_init' . $resourceName);
     }
 
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
@@ -26,10 +27,9 @@ class ResourceFactory implements AbstractFactoryInterface
 
         /** @var $bootstrap \Zend_Application_Bootstrap_ResourceBootstrapper */
         $bootstrap = $serviceLocator->get('ZeframMvc\Bootstrap');
+        $bootstrap->bootstrap($resourceName);
 
-        /** @var $pluginResource \Zend_Application_Resource_ResourceAbstract */
-        $pluginResource = $bootstrap->getPluginResource($resourceName);
-        $service = $pluginResource->init();
+        $service = $bootstrap->getResource($resourceName);
 
         // Prevent 'The factory was called but did not return an instance'
         // exception, since resource's init() method may not return anything,
