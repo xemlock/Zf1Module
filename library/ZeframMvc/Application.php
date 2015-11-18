@@ -30,6 +30,7 @@ use Zend\Stdlib\ResponseInterface;
  * can simply extend the class to override such behavior.
  *
  * @package    ZeframMvc
+ * @deprecated
  */
 class Application extends \Zend\Mvc\Application
 {
