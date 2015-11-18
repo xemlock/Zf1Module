@@ -1,7 +1,7 @@
-ZeframMvc
+Zf1Module
 =========
 
-ZeframMvc allows ZF1 modules to work in Zend Framework 2 applications. It works by providing a custom `ModuleManager` that apart from handling ZF2 modules can deal with specifics of ZF1 modules.
+Zf1Module allows ZF1 modules to work in Zend Framework 2 applications. It works by providing a custom `ModuleManager` that apart from handling ZF2 modules can deal with specifics of ZF1 modules.
 
 ## Installation
 

@@ -1,9 +1,9 @@
 {
-    "name": "zefram/zefram-mvc",
+    "name": "xemlock/zf1-module",
     "type": "library",
-    "description": "Adds support for running ZF1 modules in ZF2 application",
-    "keywords": ["zf2", "zf1", "mvc"],
-    "homepage": "https://github.com/zeframphp/zefram-mvc",
+    "description": "Adds support for running ZF1 modules in ZF2",
+    "keywords": ["zf2", "zf1", "module"],
+    "homepage": "https://github.com/xemlock/Zf1Module",
     "license": "MIT",
     "authors": [
         {
@@ -14,6 +14,7 @@
     "require": {
         "php": ">=5.3.3",
         "zendframework/zend-config": "~2.2",
+        "zendframework/zend-console": "~2.2",
         "zendframework/zend-di": "~2.2",
         "zendframework/zend-http": "~2.2",
         "zendframework/zend-loader": "~2.2",
@@ -22,8 +23,8 @@
         "zendframework/zendframework1": "~1.12"
     },
     "autoload": {
-        "psr-0": {
-            "ZeframMvc\\": "library/"
+        "psr-4": {
+            "ZeframMvc\\": "src/"
         }
     }
 }
