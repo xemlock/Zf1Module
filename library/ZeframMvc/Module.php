@@ -5,6 +5,7 @@ namespace ZeframMvc;
 use Zend\Console\Console;
 use Zend\Mvc\Application as Zf2Application;
 use Zend\Mvc\MvcEvent;
+use Zend\Mvc\ResponseSender\SendResponseEvent;
 
 class Module
 {
@@ -36,9 +37,15 @@ class Module
 
     public function onDispatchError(MvcEvent $e)
     {
-        if (Console::isConsole() || $e->getError() !== Zf2Application::ERROR_ROUTER_NO_MATCH) {
+        // CLI is also supported
+        if ($e->getError() !== Zf2Application::ERROR_ROUTER_NO_MATCH) {
             return;
         }
+
+        // TODO 1. mark as not error, 2. set artificial route match, 3. pass control to ZF1
+        // must do this in order for ZendDeveloperToolbar to work
+        // $e->setError()
+
         $e->setParam('dispatch-zf1', true);
         // TODO should event propagation be stopped?
     }
@@ -64,12 +71,65 @@ class Module
         $bootstrap = $application->getServiceManager()->get('ZeframMvc\Bootstrap');
         $bootstrap->bootstrap();
 
+        /** @var $front \Zend_Controller_Front */
+        $front = $bootstrap->getResource('FrontController');
+        $front->returnResponse(true);
+
         /** @var $response \Zend_Controller_Response_Abstract */
         $response = $bootstrap->run();
-        if ($response) {
-            $response->sendResponse();
+        if (!$response instanceof \Zend_Controller_Response_Abstract) {
+            // ZF1 sent response, stop this event, there is nothing more to do
+            $e->stopPropagation(true);
+            return;
         }
 
-        $e->stopPropagation(true);
+        // convert response to HttpResponse, so that it can be available to other ZF2 modules
+        // TODO use a specific class for this
+        if ($response->isException() && $response->renderExceptions()) {
+            $exceptions = '';
+            foreach ($this->getException() as $e) {
+                $exceptions .= $e->__toString() . "\n";
+            }
+            $body = $exceptions;
+        } else {
+            $body = $response->getBody();
+        }
+
+        switch (true) {
+            case $response instanceof \Zend_Controller_Response_Cli:
+                $r = new \Zend\Console\Response();
+                $r->setContent($body);
+                break;
+
+            default:
+                $r = new \Zend\Http\Response();
+                $r->setStatusCode($response->getHttpResponseCode());
+                $r->setHeaders($this->getHeadersFromResponse($response));
+                $type = $r->getHeaders()->get('Content-Type');
+                if (!$type) {
+                    $r->getHeaders()->addHeaderLine('Content-Type', 'text/html');
+                }
+                $r->setContent($body);
+                break;
+        }
+
+        $e->setResponse($r);
+        assert($r === $e->getResponse());
+        echo __METHOD__, ' setResponse: ', get_class($r), '@', spl_object_hash($r), '<br/>';
+    }
+
+    function getHeadersFromResponse(\Zend_Controller_Response_Abstract $response)
+    {
+        $headers = new \Zend\Http\Headers();
+
+        foreach ($response->getRawHeaders() as $header) {
+            $headers->addHeaderLine($header);
+        }
+
+        foreach ($response->getHeaders() as $header) {
+            $headers->addHeaderLine($header['name'], $header['value']);
+        }
+
+        return $headers;
     }
 }
