@@ -5,7 +5,7 @@ namespace ZeframMvc;
 use Zend\ServiceManager\ServiceManager;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 
-class LegacyApplication extends \Zend_Application implements ServiceManagerAwareInterface
+class Application extends \Zend_Application implements ServiceManagerAwareInterface
 {
     /**
      * @var ServiceManager

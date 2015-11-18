@@ -5,6 +5,11 @@ namespace ZeframMvc\Service;
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
+/**
+ * Class ResourceFactory
+ * @package ZeframMvc\Service
+ * @deprecated
+ */
 class ResourceFactory implements AbstractFactoryInterface
 {
     public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)

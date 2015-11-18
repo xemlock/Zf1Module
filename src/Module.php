@@ -11,13 +11,13 @@ class Module
     {
         return array(
             'invokables' => array(
-                'ZeframMvc\DispatchListener'     => 'ZeframMvc\Listener\DispatchListener',
-                'ZeframMvc\RenderListener'       => 'ZeframMvc\Listener\RenderListener',
+                'ZeframMvc\DispatchListener' => 'ZeframMvc\Listener\DispatchListener',
+                'ZeframMvc\RenderListener'   => 'ZeframMvc\Listener\RenderListener',
             ),
             'factories' => array(
-                'ZeframMvc\Container'            => 'ZeframMvc\Service\ContainerFactory',
-                'ZeframMvc\Bootstrap'            => 'ZeframMvc\Service\BootstrapFactory',
-                'ZeframMvc\LegacyApplication'    => 'ZeframMvc\Service\LegacyApplicationFactory',
+                'ZeframMvc\Container'   => 'ZeframMvc\Service\ContainerFactory',
+                'ZeframMvc\Bootstrap'   => 'ZeframMvc\Service\BootstrapFactory',
+                'ZeframMvc\Application' => 'ZeframMvc\Service\ApplicationFactory',
             ),
             'aliases' => array(
                 'Bootstrap' => 'ZeframMvc\Bootstrap',

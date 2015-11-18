@@ -2,20 +2,20 @@
 
 namespace ZeframMvc\Service;
 
-use ZeframMvc\LegacyApplication;
+use ZeframMvc\Application;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class LegacyApplicationFactory implements FactoryInterface
+class ApplicationFactory implements FactoryInterface
 {
     /**
      * Create the Bootstrap service
      *
      * @param  ServiceLocatorInterface $serviceLocator
-     * @return LegacyApplication
+     * @return Application
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new LegacyApplication($serviceLocator);
+        return new Application($serviceLocator);
     }
 }

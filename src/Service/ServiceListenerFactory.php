@@ -7,6 +7,7 @@ use Zend\Mvc\Service\ServiceListenerFactory as ZendServiceListenerFactory;
 /**
  * @package    ZeframMvc
  * @subpackage Service
+ * @deprecated
  *
  * Use this for minimal setup, to run only ZF1 modules by adding the following
  * settings to your application.config.php:
@@ -32,7 +33,6 @@ class ServiceListenerFactory extends ZendServiceListenerFactory
             'SendResponseListener' => 'Zend\Mvc\SendResponseListener',
         ),
         'factories' => array(
-            'Application'        => 'ZeframMvc\Service\ApplicationFactory',
             'Config'             => 'Zend\Mvc\Service\ConfigFactory',
             'DependencyInjector' => 'Zend\Mvc\Service\DiFactory',
             'Request'            => 'Zend\Mvc\Service\RequestFactory',

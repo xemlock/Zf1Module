@@ -80,7 +80,7 @@ class Container extends \Zend_Registry implements ServiceManagerAwareInterface
     {
         $resourceKey = $this->getResourceKey($key);
         if ($this->serviceManager->has($resourceKey)) {
-            // this may throw depending on service manager settings
+            // this may throw depending on the value of allowOverride setting
             $this->serviceManager->setService($resourceKey, null);
         }
     }
