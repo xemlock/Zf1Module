@@ -1,6 +1,6 @@
 <?php
 
-namespace ZeframMvc\ModuleManager\Listener;
+namespace Zf1Module\ModuleManager\Listener;
 
 use Traversable;
 use Zend\ModuleManager\Listener\ConfigListener as Zf2ConfigListener;

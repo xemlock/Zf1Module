@@ -1,6 +1,6 @@
 <?php
 
-namespace ZeframMvc;
+namespace Zf1Module;
 
 use Zend\Mvc\MvcEvent;
 use Zend\EventManager\AbstractListenerAggregate;
@@ -11,16 +11,16 @@ class Module
     {
         return array(
             'invokables' => array(
-                'ZeframMvc\DispatchListener' => 'ZeframMvc\Listener\DispatchListener',
-                'ZeframMvc\RenderListener'   => 'ZeframMvc\Listener\RenderListener',
+                'Zf1Module\DispatchListener' => 'Zf1Module\Listener\DispatchListener',
+                'Zf1Module\RenderListener'   => 'Zf1Module\Listener\RenderListener',
             ),
             'factories' => array(
-                'ZeframMvc\Container'   => 'ZeframMvc\Service\ContainerFactory',
-                'ZeframMvc\Bootstrap'   => 'ZeframMvc\Service\BootstrapFactory',
-                'ZeframMvc\Application' => 'ZeframMvc\Service\ApplicationFactory',
+                'Zf1Module\Container'   => 'Zf1Module\Service\ContainerFactory',
+                'Zf1Module\Bootstrap'   => 'Zf1Module\Service\BootstrapFactory',
+                'Zf1Module\Application' => 'Zf1Module\Service\ApplicationFactory',
             ),
             'aliases' => array(
-                'Bootstrap' => 'ZeframMvc\Bootstrap',
+                'Bootstrap' => 'Zf1Module\Bootstrap',
             ),
         );
     }
@@ -29,7 +29,7 @@ class Module
     {
         return array(
             'invokables' => array(
-                'ZeframMvc\Controller' => 'ZeframMvc\Controller',
+                'Zf1Module\Controller' => 'Zf1Module\Controller',
             ),
         );
     }
@@ -42,11 +42,11 @@ class Module
         $events = $application->getEventManager();
 
         /** @var $dispatchListener AbstractListenerAggregate */
-        $dispatchListener = $serviceManager->get('ZeframMvc\DispatchListener');
+        $dispatchListener = $serviceManager->get('Zf1Module\DispatchListener');
         $dispatchListener->attach($events);
 
         /** @var $renderListener AbstractListenerAggregate */
-        $renderListener = $serviceManager->get('ZeframMvc\RenderListener');
+        $renderListener = $serviceManager->get('Zf1Module\RenderListener');
         $renderListener->attach($events);
     }
 }

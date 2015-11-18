@@ -1,6 +1,6 @@
 <?php
 
-namespace ZeframMvc\Listener;
+namespace Zf1Module\Listener;
 
 use Zend\EventManager\AbstractListenerAggregate;
 use Zend\EventManager\EventManagerInterface;

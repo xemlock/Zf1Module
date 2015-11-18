@@ -1,6 +1,6 @@
 <?php
 
-namespace ZeframMvc;
+namespace Zf1Module;
 
 use Zend\Stdlib\DispatchableInterface as Dispatchable;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
@@ -41,7 +41,7 @@ class Controller implements Dispatchable, ServiceLocatorAwareInterface
     public function dispatch(RequestInterface $request, ResponseInterface $response = null)
     {
         /** @var $bootstrap \Zend_Application_Bootstrap_Bootstrap */
-        $bootstrap = $this->getServiceLocator()->get('ZeframMvc\Bootstrap');
+        $bootstrap = $this->getServiceLocator()->get('Zf1Module\Bootstrap');
         $bootstrap->bootstrap();
 
         /** @var $front \Zend_Controller_Front */

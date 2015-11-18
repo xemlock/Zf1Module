@@ -24,7 +24,7 @@
     },
     "autoload": {
         "psr-4": {
-            "ZeframMvc\\": "src/"
+            "Zf1Module\\": "src/"
         }
     }
 }

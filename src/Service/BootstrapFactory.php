@@ -1,9 +1,9 @@
 <?php
 
-namespace ZeframMvc\Service;
+namespace Zf1Module\Service;
 
-use ZeframMvc\Bootstrap\Bootstrap;
-use ZeframMvc\Options\BootstrapOptions;
+use Zf1Module\Bootstrap\Bootstrap;
+use Zf1Module\Options\BootstrapOptions;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -20,8 +20,8 @@ class BootstrapFactory implements FactoryInterface
         $config = $serviceLocator->has('Config') ? $serviceLocator->get('Config') : array();
         $options = new BootstrapOptions($config);
 
-        $bootstrap = new Bootstrap($serviceLocator->get('ZeframMvc\Application'));
-        $bootstrap->setContainer($serviceLocator->get('ZeframMvc\Container'));
+        $bootstrap = new Bootstrap($serviceLocator->get('Zf1Module\Application'));
+        $bootstrap->setContainer($serviceLocator->get('Zf1Module\Container'));
         $bootstrap->setOptions($options->toArray());
 
         return $bootstrap;

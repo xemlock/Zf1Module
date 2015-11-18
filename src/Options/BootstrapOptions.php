@@ -1,8 +1,8 @@
 <?php
 
-namespace ZeframMvc\Options;
+namespace Zf1Module\Options;
 
-use ZeframMvc\Exception\InvalidArgumentException;
+use Zf1Module\Exception\InvalidArgumentException;
 use Zend\Stdlib\ArrayUtils;
 
 // this is to avoid processing of whole config array in bootstrap. Only

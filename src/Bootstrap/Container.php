@@ -1,6 +1,6 @@
 <?php
 
-namespace ZeframMvc\Bootstrap;
+namespace Zf1Module\Bootstrap;
 
 use Zend\ServiceManager\ServiceManager;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
@@ -19,7 +19,7 @@ use Zend\ServiceManager\ServiceManagerAwareInterface;
  * This class extends Zend_Registry, so it can be set as a global registry
  * instance via Zend_Registry::setInstance().
  *
- * @package ZeframMvc\Bootstrap
+ * @package Zf1Module\Bootstrap
  */
 class Container extends \Zend_Registry implements ServiceManagerAwareInterface
 {

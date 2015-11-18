@@ -1,8 +1,8 @@
 <?php
 
-namespace ZeframMvc\ModuleManager\Listener;
+namespace Zf1Module\ModuleManager\Listener;
 
-use ZeframMvc\Loader\ModuleAutoloader;
+use Zf1Module\Loader\ModuleAutoloader;
 use Zend\ModuleManager\Listener\ModuleLoaderListener as Zf2ModuleLoaderListener;
 use Zend\ModuleManager\Listener\AbstractListener;
 use Zend\ModuleManager\Listener\ListenerOptions;

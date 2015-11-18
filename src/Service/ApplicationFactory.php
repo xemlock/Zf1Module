@@ -1,8 +1,8 @@
 <?php
 
-namespace ZeframMvc\Service;
+namespace Zf1Module\Service;
 
-use ZeframMvc\Application;
+use Zf1Module\Application;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 

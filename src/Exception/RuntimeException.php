@@ -16,10 +16,10 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZeframMvc\Exception;
+namespace Zf1Module\Exception;
 
 /**
- * @package ZeframMvc
+ * @package Zf1Module
  * @subpackage Exception
  */
 class RuntimeException extends \RuntimeException implements ExceptionInterface

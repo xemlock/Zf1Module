@@ -1,6 +1,6 @@
 <?php
 
-namespace ZeframMvc\Listener;
+namespace Zf1Module\Listener;
 
 use Zend\EventManager\AbstractListenerAggregate;
 use Zend\EventManager\EventManagerInterface;
@@ -22,7 +22,7 @@ class DispatchListener extends AbstractListenerAggregate
         }
 
         $routeMatch = new RouteMatch(array());
-        $routeMatch->setParam('controller', 'ZeframMvc\Controller');
+        $routeMatch->setParam('controller', 'Zf1Module\Controller');
 
         $e->setError(null);
         $e->setRouteMatch($routeMatch);

@@ -9,7 +9,7 @@ Add the following settings to your `application.config.php` and see the magic ha
 
     'service_manager' => array(
         'factories' => array(
-            'ModuleManager' => 'ZeframMvc\Service\ModuleManagerFactory',
+            'ModuleManager' => 'Zf1Module\Service\ModuleManagerFactory',
         ),
     )
 
@@ -54,15 +54,15 @@ under 'modules' key in application config. Modules with `Bootstrap.php` file onl
 
 ZF1 resources will be loaded by Bootstrap upon dispatch.
 
-Currently an instance of `ZeframMvc\Bootstrap\Bootstrap` class will be used as bootstrap.
+Currently an instance of `Zf1Module\Bootstrap\Bootstrap` class will be used as bootstrap.
 
 The bootstrap instance will be provided with a container that extends a `Zend_Registry` but is a wrapper around `ServiceManager`. Services saved via this registry have prefixed names, to distinguish them from ZF2 services. 
 
-You can provide custom container class by overwriting `ZeframMvc\Container` service config key.
+You can provide custom container class by overwriting `Zf1Module\Container` service config key.
 
 Bootstrap is registered in `ServiceManager` at `Bootstrap` key.
 
-The bootstrap will be initialized with an instance of `ZeframMvc\LegacyApplication` instance that
+The bootstrap will be initialized with an instance of `Zf1Module\LegacyApplication` instance that
 contain reference to `ServiceManager` instance. To access ZF2 services in ZF1 modules one can use:
 
     Zend_Controller_Front::getInstance()->getParam('bootstrap')->getApplication()->getServiceManager();

@@ -1,6 +1,6 @@
 <?php
 
-namespace ZeframMvc;
+namespace Zf1Module;
 
 use Zend\ServiceManager\ServiceManager;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
@@ -61,7 +61,7 @@ class Application extends \Zend_Application implements ServiceManagerAwareInterf
     public function getBootstrap()
     {
         if ($this->_bootstrap === null) {
-            return $this->getServiceManager()->get('ZeframMvc\Bootstrap');
+            return $this->getServiceManager()->get('Zf1Module\Bootstrap');
         }
         return $this->_bootstrap;
     }

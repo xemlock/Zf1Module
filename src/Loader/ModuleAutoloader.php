@@ -1,6 +1,6 @@
 <?php
 
-namespace ZeframMvc\Loader;
+namespace Zf1Module\Loader;
 
 use Zend\Loader\ModuleAutoloader as Zf2ModuleAutoloader;
 

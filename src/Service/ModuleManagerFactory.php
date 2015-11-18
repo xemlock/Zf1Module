@@ -16,9 +16,9 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZeframMvc\Service;
+namespace Zf1Module\Service;
 
-use ZeframMvc\ModuleManager\Listener\DefaultListenerAggregate;
+use Zf1Module\ModuleManager\Listener\DefaultListenerAggregate;
 use Zend\ModuleManager\Listener\ListenerOptions;
 use Zend\ModuleManager\ModuleEvent;
 use Zend\ModuleManager\ModuleManager;
@@ -26,7 +26,7 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * @package    ZeframMvc
+ * @package    Zf1Module
  * @subpackage Service
  */
 class ModuleManagerFactory implements FactoryInterface
@@ -151,9 +151,9 @@ class ModuleManagerFactory implements FactoryInterface
         $moduleManager = new ModuleManager($configuration['modules'], $events);
         $moduleManager->setEvent($moduleEvent);
 
-        // add ZeframMvc module
+        // add Zf1Module module
         $modules = $moduleManager->getModules();
-        array_unshift($modules, 'ZeframMvc');
+        array_unshift($modules, 'Zf1Module');
         $moduleManager->setModules($modules);
 
         return $moduleManager;

@@ -1,6 +1,6 @@
 <?php
 
-namespace ZeframMvc\ModuleManager\Listener;
+namespace Zf1Module\ModuleManager\Listener;
 
 use Zend\EventManager\EventManagerInterface;
 use Zend\ModuleManager\Listener\ConfigMergerInterface;

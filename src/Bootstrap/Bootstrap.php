@@ -1,6 +1,6 @@
 <?php
 
-namespace ZeframMvc\Bootstrap;
+namespace Zf1Module\Bootstrap;
 
 /**
  * Class Bootstrap
@@ -8,7 +8,7 @@ namespace ZeframMvc\Bootstrap;
  * Bootstrap class provides access to ZF1 resources and container.
  * It is required by ZF1 application resources.
  *
- * @package ZeframMvc\Bootstrap
+ * @package Zf1Module\Bootstrap
  * @deprecated
  */
 class Bootstrap extends \Zend_Application_Bootstrap_Bootstrap

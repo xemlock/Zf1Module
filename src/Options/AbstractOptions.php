@@ -1,6 +1,6 @@
 <?php
 
-namespace ZeframMvc\Options;
+namespace Zf1Module\Options;
 
 use Zend\Stdlib\AbstractOptions as Zf2AbstractOptions;
 
