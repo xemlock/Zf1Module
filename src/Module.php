@@ -22,9 +22,6 @@ class Module
             'aliases' => array(
                 'Bootstrap' => 'ZeframMvc\Bootstrap',
             ),
-            'abstract_factories' => array(
-                'ZeframMvc\Service\ResourceFactory',
-            ),
         );
     }
 
