@@ -42,10 +42,14 @@ class BootstrapOptions extends AbstractOptions
         }
         foreach ($resources as $key => $value) {
             if (is_string($key) && $key !== ($normalizedKey = strtolower($key))) {
-                $resources[$normalizedKey] = ArrayUtils::merge(
-                    $resources[$normalizedKey],
-                    $value
-                );
+                if (isset($resources[$normalizedKey])) {
+                    $resources[$normalizedKey] = ArrayUtils::merge(
+                        $resources[$normalizedKey],
+                        $value
+                    );
+                } else {
+                    $resources[$normalizedKey] = $value;
+                }
             }
         }
         $this->resources = $resources;

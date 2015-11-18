@@ -47,12 +47,4 @@ class DefaultListenerAggregate extends Zf2DefaultListenerAggregate
         $this->listeners[] = $events->attach($configListener);
         return $this;
     }
-
-    public function getConfigListener()
-    {
-        if (!$this->configListener instanceof ConfigMergerInterface) {
-            $this->setConfigListener(new ConfigListener($this->getOptions()));
-        }
-        return $this->configListener;
-    }
 }
