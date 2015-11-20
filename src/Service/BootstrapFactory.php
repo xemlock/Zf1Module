@@ -2,8 +2,6 @@
 
 namespace Zf1Module\Service;
 
-use Zend_Application_Bootstrap_Bootstrap as Bootstrap;
-use Zf1Module\Options\ApplicationOptions;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -15,7 +13,7 @@ class BootstrapFactory implements FactoryInterface
      * Bootstrap service is bootstrapped prior to returning
      *
      * @param  ServiceLocatorInterface $serviceLocator
-     * @return Bootstrap
+     * @return \Zend_Application_Bootstrap_BootstrapAbstract
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
