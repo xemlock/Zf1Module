@@ -1,6 +1,6 @@
 <?php
 
-namespace Zf1Module\Bootstrap;
+namespace Zf1Module;
 
 use Zend\ServiceManager\ServiceManager;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
@@ -23,7 +23,7 @@ use Zend\ServiceManager\ServiceManagerAwareInterface;
  */
 class Container extends \Zend_Registry implements ServiceManagerAwareInterface
 {
-    /**     
+    /**
      * @var ServiceManager
      */
     protected $serviceManager;
