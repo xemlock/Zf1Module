@@ -3,7 +3,7 @@
 namespace Zf1Module\Service;
 
 use Zf1Module\Application;
-use Zf1Module\Options\BootstrapOptions;
+use Zf1Module\Options\ApplicationOptions;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -18,7 +18,7 @@ class ApplicationFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $config = $serviceLocator->has('Config') ? $serviceLocator->get('Config') : array();
-        $options = new BootstrapOptions($config);
+        $options = new ApplicationOptions($config);
 
         $application = new Application($serviceLocator, $options->getEnvironment(), array_merge(
             $options->toArray(),

@@ -3,7 +3,7 @@
 namespace Zf1Module\Service;
 
 use Zend_Application_Bootstrap_Bootstrap as Bootstrap;
-use Zf1Module\Options\BootstrapOptions;
+use Zf1Module\Options\ApplicationOptions;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 

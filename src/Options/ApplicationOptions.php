@@ -10,7 +10,7 @@ use Zend\Stdlib\ArrayUtils;
 // i.e. PluginLoader will be before pluginPaths
 // This options must be understandable by ZF1 Bootstrap, so key normalization
 // is different.
-class BootstrapOptions extends AbstractOptions
+class ApplicationOptions extends AbstractOptions
 {
     /**
      * @var string
