@@ -2,7 +2,7 @@
 
 namespace Zf1Module\Service;
 
-use Zf1Module\Bootstrap\Container;
+use Zf1Module\Container;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
