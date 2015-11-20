@@ -13,6 +13,16 @@ use Zend\Stdlib\ArrayUtils;
 class BootstrapOptions extends AbstractOptions
 {
     /**
+     * @var string
+     */
+    protected $environment = 'production';
+
+    /**
+     * @var string|array
+     */
+    protected $bootstrap;
+
+    /**
      * @var array
      */
     protected $resources = array();
@@ -74,5 +84,33 @@ class BootstrapOptions extends AbstractOptions
     public function getPluginPaths()
     {
         return $this->pluginPaths;
+    }
+
+    public function setBootstrap($bootstrap)
+    {
+        $this->bootstrap = $bootstrap;
+        return $this;
+    }
+
+    public function getBootstrap()
+    {
+        return $this->bootstrap;
+    }
+
+    /**
+     * @param string $environment
+     */
+    public function setEnvironment($environment)
+    {
+        $this->environment = $environment;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnvironment()
+    {
+        return $this->environment;
     }
 }

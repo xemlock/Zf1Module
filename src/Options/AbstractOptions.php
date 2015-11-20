@@ -8,16 +8,16 @@ abstract class AbstractOptions extends Zf2AbstractOptions
 {
     protected $__strictMode__ = false;
 
-    protected $__ignoreEmpty__ = true;
+    protected $__ignoreNull__ = true;
 
     public function toArray()
     {
         $array = array();
         foreach ($this as $key => $value) {
-            if ($key === '__strictMode__' || $key === '__ignoreEmpty__') {
+            if ($key === '__strictMode__' || $key === '__ignoreNull__') {
                 continue;
             }
-            if ($this->__ignoreEmpty__ && count($value) === 0) {
+            if ($this->__ignoreNull__ && count($value) === 0) {
                 continue;
             }
             $array[strtolower($key)] = $value;

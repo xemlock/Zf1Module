@@ -42,7 +42,6 @@ class Controller implements Dispatchable, ServiceLocatorAwareInterface
     {
         /** @var $bootstrap \Zend_Application_Bootstrap_Bootstrap */
         $bootstrap = $this->getServiceLocator()->get('Zf1Module\Bootstrap');
-        $bootstrap->bootstrap();
 
         /** @var $front \Zend_Controller_Front */
         $front = $bootstrap->getResource('FrontController');
