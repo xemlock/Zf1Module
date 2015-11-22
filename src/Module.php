@@ -14,7 +14,6 @@ class Module
                 'Zf1Module\RenderListener'   => 'Zf1Module\Listener\RenderListener',
             ),
             'factories' => array(
-                'Zf1Module\Container'   => 'Zf1Module\Service\ContainerFactory',
                 'Zf1Module\Bootstrap'   => 'Zf1Module\Service\BootstrapFactory',
                 'Zf1Module\Application' => 'Zf1Module\Service\ApplicationFactory',
             ),
