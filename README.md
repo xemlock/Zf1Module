@@ -5,24 +5,14 @@ Zf1Module allows ZF1 modules to work in Zend Framework 2 applications. It works 
 
 ## Installation
 
-Add the following settings to your `application.config.php` and see the magic happens:
-
-    'service_manager' => array(
-        'factories' => array(
-            'ModuleManager' => 'Zf1Module\Service\ModuleManagerFactory',
-        ),
-    )
+Add `Zf1Module` to the modules list in the `application.config.php` and see the magic happens. Almost, because you need to configure it first. 
 
 ## Configuration
 
-Configuration for ZF1 application must be provided in config. Put resources configuration
-under 'resources' key, resource plugin paths in 'pluginPaths'. These keys are case-insensitive.
+Configuration for ZF1 application must be provided in `Config` service. Put resources configuration
+under 'resources' key, resource plugin paths in 'pluginPaths', bootstrap path/class configuration under 'bootstrap' key. These keys are case-insensitive.
 
-Each module may provide a ZF2 compatible `Module.php` with Module class residing in module
-namespace. In such case the module bootstrap file will be ignored, and the configuration provided
-by the Module class will be merged with the general config.
-
-For example you can setup ZF1 resources using ZF2 module configuration methods:
+For example you can setup resources using ZF2 module configuration methods:
 
     public function getConfig()
     {
@@ -44,29 +34,24 @@ For example you can setup ZF1 resources using ZF2 module configuration methods:
                         __DIR__ . '/views/scripts',
                     ),
                 ),
+				'modules' => true, // load ZF1 modules
             ),
         );
     }
 
-ZF1 modules that provide their own `Module.php` file must be listed along with the ZF2 modules
-under 'modules' key in application config. Modules with `Bootstrap.php` file only may be listed
-(not yet supported!) or be loaded using `modules` ZF1 resource.
+ZF1 modules will be loaded by the `modules` ZF1 resource.
 
-ZF1 resources will be loaded by Bootstrap upon dispatch.
+ZF1 resources will be loaded by Bootstrap upon retrieval from service manager using `Zf1Module\Bootstrap` key.
 
-Currently an instance of `Zf1Module\Bootstrap\Bootstrap` class will be used as bootstrap.
+Bootstrap class may be specified the same way as in ZF1, using a `bootstrap` key in config.
 
-The bootstrap instance will be provided with a container that extends a `Zend_Registry` but is a wrapper around `ServiceManager`. Services saved via this registry have prefixed names, to distinguish them from ZF2 services. 
-
-You can provide custom container class by overwriting `Zf1Module\Container` service config key.
-
-Bootstrap is registered in `ServiceManager` at `Bootstrap` key.
-
-The bootstrap will be initialized with an instance of `Zf1Module\LegacyApplication` instance that
-contain reference to `ServiceManager` instance. To access ZF2 services in ZF1 modules one can use:
+The bootstrap will be instantiated by an instance of `Zf1Module\Application` that contains reference to `ServiceManager` instance. To access ZF2 services in ZF1 modules one can use:
 
     Zend_Controller_Front::getInstance()->getParam('bootstrap')->getApplication()->getServiceManager();
 
+Bootstrap retrieved by `Zf1Module\Bootstrap` key is bootstrapped. To retrieve bootstrap instance without bootstrapping its resources, use:
+
+	$serviceManager->get('Zf1Module\Application')->getBootstrap(); 
 
 
 
