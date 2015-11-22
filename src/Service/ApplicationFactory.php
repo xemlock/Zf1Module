@@ -20,10 +20,8 @@ class ApplicationFactory implements FactoryInterface
         $config = $serviceLocator->has('Config') ? $serviceLocator->get('Config') : array();
         $options = new ApplicationOptions($config);
 
-        $application = new Application($serviceLocator, $options->getEnvironment(), array_merge(
-            $options->toArray(),
-            array('container' => $serviceLocator->get('Zf1Module\Container'))
-        ));
+        $application = new Application($serviceLocator, $options->getEnvironment(), $options->toArray());
+        $application->getBootstrap()->setContainer($serviceLocator->get('Zf1Module\Container'));
 
         return $application;
     }
