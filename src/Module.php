@@ -3,7 +3,6 @@
 namespace Zf1Module;
 
 use Zend\Mvc\MvcEvent;
-use Zend\EventManager\AbstractListenerAggregate;
 
 class Module
 {
@@ -41,12 +40,7 @@ class Module
         $serviceManager = $application->getServiceManager();
         $events = $application->getEventManager();
 
-        /** @var $dispatchListener AbstractListenerAggregate */
-        $dispatchListener = $serviceManager->get('Zf1Module\DispatchListener');
-        $dispatchListener->attach($events);
-
-        /** @var $renderListener AbstractListenerAggregate */
-        $renderListener = $serviceManager->get('Zf1Module\RenderListener');
-        $renderListener->attach($events);
+        $serviceManager->get('Zf1Module\DispatchListener')->attach($events);
+        $serviceManager->get('Zf1Module\RenderListener')->attach($events);
     }
 }

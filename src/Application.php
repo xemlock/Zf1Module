@@ -10,7 +10,7 @@ class Application extends \Zend_Application implements ServiceManagerAwareInterf
     /**
      * @var ServiceManager
      */
-    protected $_serviceManager;
+    protected $serviceManager;
 
     /**
      * Constructor
@@ -37,7 +37,7 @@ class Application extends \Zend_Application implements ServiceManagerAwareInterf
      */
     public function setServiceManager(ServiceManager $serviceManager)
     {
-        $this->_serviceManager = $serviceManager;
+        $this->serviceManager = $serviceManager;
         return $this;
     }
 
@@ -48,21 +48,6 @@ class Application extends \Zend_Application implements ServiceManagerAwareInterf
      */
     public function getServiceManager()
     {
-        return $this->_serviceManager;
-    }
-
-    /**
-     * Get bootstrap object
-     *
-     * If bootstrap not present it is retrieved from Service Manager.
-     *
-     * @return \Zend_Application_Bootstrap_BootstrapAbstract
-     */
-    public function getBootstrap()
-    {
-        if ($this->_bootstrap === null) {
-            return $this->getServiceManager()->get('Zf1Module\Bootstrap');
-        }
-        return $this->_bootstrap;
+        return $this->serviceManager;
     }
 }
