@@ -1,7 +1,7 @@
 {
     "name": "xemlock/zf1-module",
     "type": "library",
-    "description": "Adds support for running ZF1 modules in ZF2",
+    "description": "Adds support for running ZF1 application in ZF2",
     "keywords": ["zf2", "zf1", "module"],
     "homepage": "https://github.com/xemlock/Zf1Module",
     "license": "MIT",
