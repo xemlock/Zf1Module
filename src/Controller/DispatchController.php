@@ -1,6 +1,6 @@
 <?php
 
-namespace Zf1Module;
+namespace Zf1Module\Controller;
 
 use Zend\Stdlib\DispatchableInterface as Dispatchable;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
