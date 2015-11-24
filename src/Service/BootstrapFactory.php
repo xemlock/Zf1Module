@@ -8,10 +8,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class BootstrapFactory implements FactoryInterface
 {
     /**
-     * Retrieve a bootstrapped ZF1 application bootstrap
-     *
-     * To access Bootstrap instance without bootstrapping it use
-     * <code>$serviceLocator->get('Zf1Module\Application')->getBootstrap()</code>
+     * Retrieve ZF1 application bootstrap
      *
      * @param  ServiceLocatorInterface $serviceLocator
      * @return \Zend_Application_Bootstrap_BootstrapAbstract
@@ -20,10 +17,7 @@ class BootstrapFactory implements FactoryInterface
     {
         /** @var $application \Zend_Application */
         $application = $serviceLocator->get('Zf1Module\Application');
-
         $bootstrap = $application->getBootstrap();
-        $bootstrap->bootstrap();
-
         return $bootstrap;
     }
 }

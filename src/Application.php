@@ -2,52 +2,30 @@
 
 namespace Zf1Module;
 
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
-class Application extends \Zend_Application implements ServiceManagerAwareInterface
+class Application extends \Zend_Application implements ServiceLocatorAwareInterface
 {
     /**
-     * @var ServiceManager
+     * @var ServiceLocatorInterface
      */
-    protected $serviceManager;
+    protected $serviceLocator;
 
     /**
-     * Constructor
-     *
-     * Initialize application. Potentially initializes include_paths, PHP
-     * settings, and bootstrap class.
-     *
-     * @param ServiceManager $serviceManager
-     * @param string $environment
-     * @param string|array|\Zend_Config $options
-     * @param bool $suppressNotFoundWarnings
+     * {@inheritDoc}
      */
-    public function __construct(ServiceManager $serviceManager, $environment = null, $options = null, $suppressNotFoundWarnings = null)
+    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {
-        $this->setServiceManager($serviceManager);
-        parent::__construct($environment, $options, $suppressNotFoundWarnings);
-    }
-
-    /**
-     * Set service manager
-     *
-     * @param ServiceManager $serviceManager
-     * @return $this
-     */
-    public function setServiceManager(ServiceManager $serviceManager)
-    {
-        $this->serviceManager = $serviceManager;
+        $this->serviceLocator = $serviceLocator;
         return $this;
     }
 
     /**
-     * Get service manager
-     *
-     * @return ServiceManager
+     * {@inheritDoc}
      */
-    public function getServiceManager()
+    public function getServiceLocator()
     {
-        return $this->serviceManager;
+        return $this->serviceLocator;
     }
 }

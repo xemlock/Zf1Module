@@ -16,7 +16,7 @@ class Controller implements Dispatchable, ServiceLocatorAwareInterface
     protected $serviceLocator;
 
     /**
-     * @param \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator
+     * {@inheritDoc}
      */
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {
@@ -24,7 +24,7 @@ class Controller implements Dispatchable, ServiceLocatorAwareInterface
     }
 
     /**
-     * @return \Zend\ServiceManager\ServiceLocatorInterface
+     * {@inheritDoc}
      */
     public function getServiceLocator()
     {
@@ -42,6 +42,7 @@ class Controller implements Dispatchable, ServiceLocatorAwareInterface
     {
         /** @var $bootstrap \Zend_Application_Bootstrap_Bootstrap */
         $bootstrap = $this->getServiceLocator()->get('Zf1Module\Bootstrap');
+        $bootstrap->bootstrap();
 
         /** @var $front \Zend_Controller_Front */
         $front = $bootstrap->getResource('FrontController');
