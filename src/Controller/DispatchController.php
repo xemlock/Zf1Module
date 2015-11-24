@@ -8,7 +8,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Stdlib\RequestInterface;
 use Zend\Stdlib\ResponseInterface;
 
-class Controller implements Dispatchable, ServiceLocatorAwareInterface
+class DispatchController implements Dispatchable, ServiceLocatorAwareInterface
 {
     /**
      * @var ServiceLocatorInterface

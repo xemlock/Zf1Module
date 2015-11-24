@@ -14,7 +14,7 @@ return array(
 
     'controllers' => array(
         'invokables' => array(
-            'Zf1Module\Controller' => 'Zf1Module\Controller',
+            'Zf1Module\DispatchController' => 'Zf1Module\Controller\DispatchController',
         ),
     ),
 );
