@@ -25,6 +25,9 @@
     "autoload": {
         "psr-4": {
             "Zf1Module\\": "src/"
-        }
+        },
+        "classmap": [
+            "Module.php"
+        ]
     }
 }
