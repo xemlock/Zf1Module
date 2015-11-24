@@ -2,8 +2,11 @@
 
 namespace Zf1Module\Listener;
 
+use Zend\Console\Response as ConsoleResponse;
 use Zend\EventManager\AbstractListenerAggregate;
 use Zend\EventManager\EventManagerInterface;
+use Zend\Http\Headers as HttpHeaders;
+use Zend\Http\Response as HttpResponse;
 use Zend\Mvc\MvcEvent;
 use Zend\Stdlib\ResponseInterface as Response;
 
@@ -17,8 +20,8 @@ class RenderListener extends AbstractListenerAggregate
     /**
      * Renders ZF1 response into a ZF2 response
      *
-     * @param MvcEvent $e
-     * @return Response|null
+     * @param \Zend\Mvc\MvcEvent $e
+     * @return \Zend\Stdlib\ResponseInterface|null
      */
     public function onRender(MvcEvent $e)
     {
@@ -33,6 +36,10 @@ class RenderListener extends AbstractListenerAggregate
         return $response;
     }
 
+    /**
+     * @param \Zend\Stdlib\ResponseInterface $r
+     * @param \Zend_Controller_Response_Abstract $response
+     */
     public function renderIntoResponse(Response $r, \Zend_Controller_Response_Abstract $response)
     {
         // render ZF1 response into ZF2 response
@@ -47,8 +54,8 @@ class RenderListener extends AbstractListenerAggregate
         }
 
         switch (true) {
-            case $r instanceof \Zend\Http\Response:
-                /** @var $r \Zend\Http\Response */
+            case $r instanceof HttpResponse:
+                /** @var $r HttpResponse */
                 $r->setStatusCode($response->getHttpResponseCode());
                 $r->setHeaders($this->getHeadersFromResponse($response));
 
@@ -61,17 +68,20 @@ class RenderListener extends AbstractListenerAggregate
                 $r->setContent($body);
                 break;
 
-            case $r instanceof \Zend\Console\Response:
+            case $r instanceof ConsoleResponse:
             default:
-                /** @var $r \Zend\Console\Response */
                 $r->setContent($body);
                 break;
         }
     }
 
+    /**
+     * @param \Zend_Controller_Response_Abstract $response
+     * @return \Zend\Http\Headers
+     */
     protected function getHeadersFromResponse(\Zend_Controller_Response_Abstract $response)
     {
-        $headers = new \Zend\Http\Headers();
+        $headers = new HttpHeaders();
 
         foreach ($response->getRawHeaders() as $header) {
             $headers->addHeaderLine($header);
