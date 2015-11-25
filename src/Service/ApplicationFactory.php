@@ -22,7 +22,7 @@ class ApplicationFactory implements FactoryInterface
 
         $application = new Application(
             $options->getEnvironment(),
-            $options->getOptions(),
+            $options->getConfig(),
             $options->getSuppressNotFoundWarnings()
         );
 

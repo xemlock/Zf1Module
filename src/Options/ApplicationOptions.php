@@ -12,9 +12,9 @@ class ApplicationOptions extends AbstractOptions
     protected $environment = 'production';
 
     /**
-     * @var array|string|\Zend_Config
+     * @var array|string
      */
-    protected $options = array();
+    protected $config = array();
 
     /**
      * @var bool
@@ -39,20 +39,20 @@ class ApplicationOptions extends AbstractOptions
     }
 
     /**
-     * @param array|string|\Zend_Config $options
+     * @param array|string $options
      */
-    public function setOptions($options)
+    public function setConfig($options)
     {
-        $this->options = $options;
+        $this->config = $options;
         return $this;
     }
 
     /**
-     * @return array|string|\Zend_Config
+     * @return array|string
      */
-    public function getOptions()
+    public function getConfig()
     {
-        return $this->options;
+        return $this->config;
     }
 
     /**
