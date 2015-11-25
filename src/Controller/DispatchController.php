@@ -41,7 +41,7 @@ class DispatchController implements Dispatchable, ServiceLocatorAwareInterface
     public function dispatch(RequestInterface $request, ResponseInterface $response = null)
     {
         /** @var $bootstrap \Zend_Application_Bootstrap_Bootstrap */
-        $bootstrap = $this->getServiceLocator()->get('Zf1Module\Bootstrap');
+        $bootstrap = $this->getServiceLocator()->get('Zf1Module\Application')->getBootstrap();
         $bootstrap->bootstrap();
 
         /** @var $front \Zend_Controller_Front */
