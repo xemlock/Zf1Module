@@ -2,7 +2,6 @@
 
 namespace Zf1Module\Listener;
 
-use Zend\Console\Response as ConsoleResponse;
 use Zend\EventManager\AbstractListenerAggregate;
 use Zend\EventManager\EventManagerInterface;
 use Zend\Http\Headers as HttpHeaders;
@@ -53,25 +52,16 @@ class RenderListener extends AbstractListenerAggregate
             $body = $response->getBody();
         }
 
-        switch (true) {
-            case $r instanceof HttpResponse:
-                /** @var $r HttpResponse */
-                $r->setStatusCode($response->getHttpResponseCode());
-                $r->setHeaders($this->getHeadersFromResponse($response));
+        $r->setContent($body);
 
-                if ($response instanceof \Zend_Controller_Response_Http) {
-                    $type = $r->getHeaders()->get('Content-Type');
-                    if (!$type) {
-                        $r->getHeaders()->addHeaderLine('Content-Type', 'text/html');
-                    }
-                }
-                $r->setContent($body);
-                break;
+        if ($r instanceof HttpResponse) {
+            $r->setStatusCode($response->getHttpResponseCode());
+            $r->setHeaders($this->getHeadersFromResponse($response));
 
-            case $r instanceof ConsoleResponse:
-            default:
-                $r->setContent($body);
-                break;
+            $type = $r->getHeaders()->get('Content-Type');
+            if (!$type) {
+                $r->getHeaders()->addHeaderLine('Content-Type', 'text/html');
+            }
         }
     }
 
