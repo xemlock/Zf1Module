@@ -7,16 +7,22 @@ use Zend\Stdlib\AbstractOptions;
 class ApplicationOptions extends AbstractOptions
 {
     /**
+     * Application environment
+     *
      * @var string
      */
     protected $environment = 'production';
 
     /**
+     * String path to configuration file, or array of configuration options
+     *
      * @var array|string
      */
     protected $config = array();
 
     /**
+     * Should warnings be suppressed when a file is not found during autoloading with Zend_Loader_Autoloader instance
+     *
      * @var bool
      */
     protected $suppressNotFoundWarnings;
@@ -26,7 +32,7 @@ class ApplicationOptions extends AbstractOptions
      */
     public function setEnvironment($environment)
     {
-        $this->environment = $environment;
+        $this->environment = (string) $environment;
         return $this;
     }
 
@@ -60,7 +66,7 @@ class ApplicationOptions extends AbstractOptions
      */
     public function setSuppressNotFoundWarnings($suppressNotFoundWarnings)
     {
-        $this->suppressNotFoundWarnings = $suppressNotFoundWarnings;
+        $this->suppressNotFoundWarnings = (bool) $suppressNotFoundWarnings;
         return $this;
     }
 
