@@ -4,6 +4,7 @@ namespace Zf1Module\Service;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zf1Module\Application\Resource\ServiceLocator as ServiceLocatorResource;
 use Zf1Module\Options\ApplicationOptions;
 
 class ApplicationFactory implements FactoryInterface
@@ -27,6 +28,11 @@ class ApplicationFactory implements FactoryInterface
             $options->getConfig(),
             $options->getSuppressNotFoundWarnings()
         );
+
+        $bootstrap = $application->getBootstrap();
+        if (!$bootstrap->hasPluginResource('ServiceLocator')) {
+            $bootstrap->registerPluginResource(new ServiceLocatorResource($serviceLocator));
+        }
 
         return $application;
     }
