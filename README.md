@@ -20,8 +20,10 @@ Add `Zf1Module` to the module list in `config/application.config.php` and see th
 
 ## Usage
 
-By default the ZF1 application will be an instance of `Zf1Module\Application`. This implementation provides a method for retrieving a service locator instance.
+By default the ZF1 application will be an instance of `\Zend_Application`. You can override this class by providing `application_class` setting.
+The only requirement is that this class constructor must follow the same arguments as that of `\Zend_Application`.
 
+Application bootstrap
 To retrieve ZF2 service manager in ZF1 code use:
 
 ```php
