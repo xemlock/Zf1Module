@@ -17,16 +17,20 @@ class ApplicationFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $config = $serviceLocator->has('Config') ? $serviceLocator->get('Config') : array();
-        $options = new ApplicationOptions(isset($config['zf1']) ? $config['zf1'] : array());
+        $applicationOptions = new ApplicationOptions();
 
-        $applicationClass = $options->getApplicationClass();
+        $config = $serviceLocator->has('Config') ? $serviceLocator->get('Config') : array();
+        if (isset($config['zf1'])) {
+            $applicationOptions->setFromArray($config['zf1']);
+        }
+
+        $applicationClass = $applicationOptions->getApplicationClass();
 
         /** @var $application \Zend_Application */
         $application = new $applicationClass(
-            $options->getEnvironment(),
-            $options->getConfig(),
-            $options->getSuppressNotFoundWarnings()
+            $applicationOptions->getEnvironment(),
+            $applicationOptions->getConfig(),
+            $applicationOptions->getSuppressNotFoundWarnings()
         );
 
         $bootstrap = $application->getBootstrap();
