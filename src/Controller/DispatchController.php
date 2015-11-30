@@ -2,43 +2,18 @@
 
 namespace Zf1Module\Controller;
 
-use Zend\Stdlib\DispatchableInterface as Dispatchable;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Stdlib\RequestInterface;
-use Zend\Stdlib\ResponseInterface;
+use Zend\Mvc\Controller\AbstractController;
+use Zend\Mvc\MvcEvent;
 
-class DispatchController implements Dispatchable, ServiceLocatorAwareInterface
+class DispatchController extends AbstractController
 {
     /**
-     * @var ServiceLocatorInterface
-     */
-    protected $serviceLocator;
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
-    }
-
-    /**
-     * Dispatch a request
+     * Execute the request
      *
-     * @param RequestInterface $request
-     * @param ResponseInterface $response
+     * @param \Zend\Mvc\MvcEvent $event
      * @return \Zend_Controller_Response_Abstract|null
      */
-    public function dispatch(RequestInterface $request, ResponseInterface $response = null)
+    public function onDispatch(MvcEvent $event)
     {
         /** @var $bootstrap \Zend_Application_Bootstrap_Bootstrap */
         $bootstrap = $this->getServiceLocator()->get('Zf1Module\Application')->getBootstrap();
@@ -52,9 +27,10 @@ class DispatchController implements Dispatchable, ServiceLocatorAwareInterface
         $response = $bootstrap->run();
         if (!$response instanceof \Zend_Controller_Response_Abstract) {
             // looks like ZF1 already sent response, so there is nothing more to do
+            $event->stopPropagation();
             return;
         }
 
-        return $response;
+        $event->setResult($response);
     }
 }

@@ -7,6 +7,13 @@ use Zend\Stdlib\AbstractOptions;
 class ApplicationOptions extends AbstractOptions
 {
     /**
+     * Application class
+     *
+     * @var string
+     */
+    protected $applicationClass = 'Zend_Application';
+
+    /**
      * Application environment
      *
      * @var string
@@ -28,7 +35,26 @@ class ApplicationOptions extends AbstractOptions
     protected $suppressNotFoundWarnings;
 
     /**
+     * @param string $applicationClass
+     * @return ApplicationOptions
+     */
+    public function setApplicationClass($applicationClass)
+    {
+        $this->applicationClass = (string) $applicationClass;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApplicationClass()
+    {
+        return $this->applicationClass;
+    }
+
+    /**
      * @param string $environment
+     * @return ApplicationOptions
      */
     public function setEnvironment($environment)
     {
@@ -46,6 +72,7 @@ class ApplicationOptions extends AbstractOptions
 
     /**
      * @param array|string $options
+     * @return ApplicationOptions
      */
     public function setConfig($options)
     {
@@ -63,6 +90,7 @@ class ApplicationOptions extends AbstractOptions
 
     /**
      * @param bool $suppressNotFoundWarnings
+     * @return ApplicationOptions
      */
     public function setSuppressNotFoundWarnings($suppressNotFoundWarnings)
     {
