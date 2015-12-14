@@ -18,9 +18,13 @@
         "zendframework/zend-console": "~2.2",
         "zendframework/zend-di": "~2.2",
         "zendframework/zend-http": "~2.2",
+        "zendframework/zend-i18n": "~2.2",
         "zendframework/zend-loader": "~2.2",
+        "zendframework/zend-log": "~2.2",
         "zendframework/zend-modulemanager": "~2.2",
         "zendframework/zend-mvc": "~2.2",
+        "zendframework/zend-serializer": "~2.2",
+        "zendframework/zend-view": "~2.2",
         "zendframework/zendframework1": "~1.12"
     },
     "autoload": {
