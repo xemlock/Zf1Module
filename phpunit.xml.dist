@@ -4,13 +4,8 @@
          verbose="true"
          bootstrap="tests/bootstrap.php">
     <testsuites>
-        <testsuite name="ZeframMvc Test Suite">
-            <directory suffix=".php">./tests/ZeframMvc</directory>
+        <testsuite name="Zf1Module Test Suite">
+            <directory suffix=".php">./tests/Zf1ModuleTest</directory>
         </testsuite>
     </testsuites>
-    <filter>
-        <whitelist>
-            <directory suffix=".php">./library/ZeframMvc/</directory>
-        </whitelist>
-    </filter>
 </phpunit>
