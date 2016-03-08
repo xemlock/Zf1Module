@@ -16,7 +16,7 @@ class DispatchController extends AbstractController
     public function onDispatch(MvcEvent $event)
     {
         /** @var $bootstrap \Zend_Application_Bootstrap_Bootstrap */
-        $bootstrap = $this->getServiceLocator()->get('Zf1Module\Application')->getBootstrap();
+        $bootstrap = $event->getApplication()->getServiceManager()->get('Zf1Module\Application')->getBootstrap();
         $bootstrap->bootstrap();
 
         /** @var $front \Zend_Controller_Front */
