@@ -17,6 +17,7 @@
         "zendframework/zend-config": "~2.2",
         "zendframework/zend-console": "~2.2",
         "zendframework/zend-di": "~2.2",
+        "zendframework/zend-eventmanager": "~2.2",
         "zendframework/zend-http": "~2.2",
         "zendframework/zend-i18n": "~2.2",
         "zendframework/zend-loader": "~2.2",
